@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Make sure scenes are added to build settings!
+
 public class GameManager : MonoBehaviour
 {
     static GameManager instance;
@@ -10,7 +12,9 @@ public class GameManager : MonoBehaviour
     public string mainMenuSceneName = "MainMenu";
 
     [Tooltip("First level at index 0")]
-    public string[] sceneNames;
+    public string[] levelSceneNames;
+    public string[] tutorialSceneNames;
+    public string[] currentSceneNames;
 
     string currentSceneName;
     int sceneIndex = 0;
@@ -18,7 +22,7 @@ public class GameManager : MonoBehaviour
     // The following is kind've crappy way to test this, but it works!
     public bool triggerMainMenuScene = false;
     public bool triggerRestartScene = false;
-    public bool triggerNextScene = false; 
+    public bool triggerNextScene = false;
 
     private void Awake()
     {
@@ -53,6 +57,25 @@ public class GameManager : MonoBehaviour
         triggerNextScene = false;
     }
 
+    public void playTutorialScenes()
+    {
+        currentSceneNames = tutorialSceneNames;
+        sceneIndex = 0;
+        nextScene();
+    }
+
+    public void playGameScenes()
+    {
+        currentSceneNames = levelSceneNames;
+        sceneIndex = 0;
+        nextScene();
+    }
+
+    public void quitGame()
+    {
+        Application.Quit();
+    }
+
     public void loadMainMenu()
     {
         StartCoroutine(LoadSceneInBackground(mainMenuSceneName));
@@ -68,9 +91,9 @@ public class GameManager : MonoBehaviour
     public void nextScene()
     {
         // Heavily based on https://docs.unity3d.com/ScriptReference/SceneManagement.SceneManager.LoadSceneAsync.html
-        string sceneName = sceneNames[sceneIndex];
+        string sceneName = currentSceneNames[sceneIndex];
         StartCoroutine(LoadSceneInBackground(sceneName));
-        sceneIndex = (sceneIndex + 1) % sceneNames.Length;
+        sceneIndex = (sceneIndex + 1) % currentSceneNames.Length;
         currentSceneName = sceneName;
     }
 
