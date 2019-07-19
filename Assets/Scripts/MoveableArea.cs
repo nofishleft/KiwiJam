@@ -74,7 +74,7 @@ public class MoveableArea : MonoBehaviour
     {
         foreach (var kiwi in GetComponentsInChildren<Kiwi>())
         {
-            kiwi.SetPath(Path);
+            //kiwi.SetPath(Path);
             switch (kiwi.Exit)
             {
                 case EntryPoints.UP:
@@ -126,6 +126,7 @@ public class MoveableArea : MonoBehaviour
         RegeneratePath();
         Quaternion q = Quaternion.Euler(0, 0, -90);
         transform.localRotation = transform.localRotation * q;
+        ApplyChangedPathToChildren();
     }
 
     public static Vector3 VectorFromEntryPoint(EntryPoints point)

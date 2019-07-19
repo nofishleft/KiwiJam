@@ -72,6 +72,14 @@ public class Kiwi : MonoBehaviour
 
                 if (contains)
                 {
+                    if (parentTile.Entries[0] == entry)
+                    {
+                        this.Exit = parentTile.Entries[1];
+                    } else if(parentTile.Entries[1] == entry)
+                    {
+                        this.Exit = parentTile.Entries[0];
+                    }
+
                     Debug.Log("Contains");
                     transform.parent = obj.transform;
 
