@@ -4,10 +4,28 @@ using UnityEngine;
 
 public class MoveableArea : MonoBehaviour
 {
+    public bool R;
+
     public PathType TypeOfPath;
     //public int PathOrientation;
     
     public EntryPoints[] Entries;
+
+    private void Start()
+    {
+        List<Vector3> list = Path;
+    }
+
+#if DEBUG
+    private void Update()
+    {
+        if (R)
+        {
+            Rotate();
+            R = false;
+        }
+    }
+#endif
 
     public List<Vector3> Path
     {
@@ -24,6 +42,11 @@ public class MoveableArea : MonoBehaviour
             list.Add(VectorFromEntryPoint(Entries[0]));
             list.Add(VectorFromEntryPoint(Entries[1]));
 
+            for (int i = 1; i < list.Count; ++i)
+            {
+                Debug.DrawLine(transform.TransformPoint(list[i - 1]), transform.TransformPoint(list[i]), Color.red, 10f, false);
+            }
+
             return list;
         } else if (TypeOfPath == PathType.CORNER)
         {
@@ -31,10 +54,45 @@ public class MoveableArea : MonoBehaviour
             list.Add(Vector3.zero);
             list.Add(VectorFromEntryPoint(Entries[1]));
 
+            for (int i = 1; i < list.Count; ++i)
+            {
+                Debug.DrawLine(transform.TransformPoint(list[i - 1]), transform.TransformPoint(list[i]), Color.red, 10f, false);
+            }
+
             return list;
         }
 
         return null;
+    }
+
+    public void RegeneratePath()
+    {
+        _path = CreatePath();
+    }
+
+    public void ApplyChangedPathToChildren()
+    {
+        foreach (var kiwi in GetComponentsInChildren<Kiwi>())
+        {
+            kiwi.SetPath(Path);
+            switch (kiwi.Exit)
+            {
+                case EntryPoints.UP:
+                    kiwi.Exit = EntryPoints.RIGHT;
+                    break;
+                case EntryPoints.RIGHT:
+                    kiwi.Exit = EntryPoints.DOWN;
+                    break;
+                case EntryPoints.DOWN:
+                    kiwi.Exit = EntryPoints.LEFT;
+                    break;
+                case EntryPoints.LEFT:
+                    kiwi.Exit = EntryPoints.UP;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     public virtual List<Vector3> GetPath(Vector3 startingPosition)
@@ -64,9 +122,13 @@ public class MoveableArea : MonoBehaviour
                     break;
             }
         }
+
+        RegeneratePath();
+        Quaternion q = Quaternion.Euler(0, 0, -90);
+        transform.localRotation = transform.localRotation * q;
     }
 
-    private Vector3 VectorFromEntryPoint(EntryPoints point)
+    public static Vector3 VectorFromEntryPoint(EntryPoints point)
     {
         switch (point)
         {
@@ -80,6 +142,23 @@ public class MoveableArea : MonoBehaviour
                 return Vector3.left/2;
             default:
                 return Vector3.zero;
+        }
+    }
+
+    public static EntryPoints FlipEntryPoints(EntryPoints point)
+    {
+        switch (point)
+        {
+            case EntryPoints.UP:
+                return EntryPoints.DOWN;
+            case EntryPoints.RIGHT:
+                return EntryPoints.LEFT;
+            case EntryPoints.DOWN:
+                return EntryPoints.UP;
+            case EntryPoints.LEFT:
+                return EntryPoints.RIGHT;
+            default:
+                return EntryPoints.DOWN;
         }
     }
 }
