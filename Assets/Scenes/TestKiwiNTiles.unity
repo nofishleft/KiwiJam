@@ -166,8 +166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   R: 0
-  TypeOfPath: 0
-  Entries: 0200000001000000
+  TypeOfPath: 1
+  Entries: 0200000003000000
 --- !u!212 &35248993
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -437,7 +437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   R: 0
   TypeOfPath: 1
-  Entries: 0000000001000000
+  Entries: 0300000002000000
 --- !u!212 &688120895
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -885,6 +885,7 @@ MonoBehaviour:
   - {x: 0, y: -0.5, z: 0}
   SpaceBetweenKiwis: 1
   parentTile: {fileID: 1870689493}
+  Exit: 3
 --- !u!4 &1857985567
 Transform:
   m_ObjectHideFlags: 0
