@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     string currentSceneName;
     int sceneIndex = 0;
+    bool isPaused = false;
 
     // The following is kind've crappy way to test this, but it works!
     public bool triggerMainMenuScene = false;
@@ -55,6 +56,27 @@ public class GameManager : MonoBehaviour
         triggerMainMenuScene = false;
         triggerRestartScene = false;
         triggerNextScene = false;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pauseGame();
+        }
+    }
+
+    void pauseGame()
+    {
+        if (currentSceneName != mainMenuSceneName)
+        {
+            if (!isPaused)
+            {
+                Time.timeScale = 0;
+                isPaused = true;
+            } else
+            {
+                Time.timeScale = 1;
+                isPaused = false;
+            }
+        }
     }
 
     public void playTutorialScenes()
