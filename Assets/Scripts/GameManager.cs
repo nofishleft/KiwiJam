@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
     {
         canvas = transform.GetChild(0).gameObject;
         currentSceneName = mainMenuSceneName;
+
+        MaterialList.Load();
     }
 
     // This is only implemented for testing, it can be removed later

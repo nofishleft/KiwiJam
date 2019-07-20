@@ -8,7 +8,7 @@ public class RageBar : MonoBehaviour
 
     Slider slider;
     [Range(0, 1)]
-    public float rage = 0;
+    public static float rage = 0;
 
     // Start is called before the first frame update
     void Start()

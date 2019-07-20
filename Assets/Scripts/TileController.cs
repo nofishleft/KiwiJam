@@ -3,16 +3,31 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
+/// <summary>
+/// Allows you to rotate and swap tiles
+/// </summary>
+
+[RequireComponent(typeof(AudioSource))]
 public class TileController : MonoBehaviour
 {
     private InputState _state = InputState.Nothing;
 
     private MoveableTile _tile;
 
+    public AudioClip[] swapClips;
+    public AudioClip[] rotateClips;
+    private AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        DontDestroyOnLoad(gameObject);
+        audioSource = GetComponent<AudioSource>();
+    }
+    private void OnLevelWasLoaded(int level)
+    {
+        _state = InputState.Nothing;
+        _tile = null;
     }
 
     // Update is called once per frame
@@ -20,13 +35,12 @@ public class TileController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Mouse Left");
-            Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
+            //Debug.Log("Mouse Left");
+            //Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 20, Kiwi.TileFinderMask);
-            Debug.Log(v);
-            Debug.Log(hit.collider);
+            //Debug.Log(v);
+            //Debug.Log(hit.collider);
             if (hit.collider != null)
             {
                 MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
@@ -92,6 +106,7 @@ public class TileController : MonoBehaviour
 
     public void Swap(Tile a, Tile b)
     {
+        playSwapClip();
         Vector3 pos = b.transform.position;
         b.transform.position = a.transform.position;
         a.transform.position = pos;
@@ -99,7 +114,27 @@ public class TileController : MonoBehaviour
 
     public void Rotate(Tile a)
     {
+        playRotateClip();
         a.Rotate();
+
+    }
+
+    public void playRotateClip()
+    {
+        if (rotateClips != null && rotateClips.Length > 0)
+        {
+            AudioClip clip = rotateClips[Random.Range(0, rotateClips.Length)];
+            audioSource.PlayOneShot(clip);
+        }
+    }
+
+    public void playSwapClip()
+    {
+        if (swapClips != null && swapClips.Length > 0)
+        {
+            AudioClip clip = swapClips[Random.Range(0, swapClips.Length)];
+            audioSource.PlayOneShot(clip);
+        }
     }
 
     private enum InputState
