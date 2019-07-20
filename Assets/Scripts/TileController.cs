@@ -35,12 +35,12 @@ public class TileController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Mouse Left");
+            //Debug.Log("Mouse Left");
             //Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 20, Kiwi.TileFinderMask);
             //Debug.Log(v);
-            Debug.Log(hit.collider);
+            //Debug.Log(hit.collider);
             if (hit.collider != null)
             {
                 MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();

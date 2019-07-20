@@ -14,7 +14,7 @@ public class Tile : MonoBehaviour
 
     private void Start()
     {
-        _ = Path;
+        //_ = Path;
     }
 
     public List<Vector3> Path

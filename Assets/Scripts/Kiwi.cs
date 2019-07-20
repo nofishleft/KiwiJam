@@ -29,7 +29,8 @@ public class Kiwi : MonoBehaviour
 
     public void SetPath(List<Vector3> src)
     {
-        if (Path == null) Path = new List<Vector3>(src.Count);
+        Debug.Log(src.Count);
+        Path = new List<Vector3>(src.Count);
 
         if (FlipPath)
         {
@@ -43,11 +44,13 @@ public class Kiwi : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < Path.Count; ++i)
+            foreach (var obj in src)
             {
-                Path[i] = src[i];
+                Path.Add(obj);
             }
         }
+
+        Debug.Log(Path.Count);
     }
 
     private bool FlipPath = false;
@@ -65,7 +68,7 @@ public class Kiwi : MonoBehaviour
             if (hit.collider != null && hit.collider.gameObject != this.gameObject && hit.collider.gameObject != parentTile.gameObject)
             {
 #if DEBUG
-                Debug.Log("Found");
+                //Debug.Log("Found");
 #endif
                 Tile oldTile = parentTile;
 
@@ -86,7 +89,7 @@ public class Kiwi : MonoBehaviour
                         this.Exit = parentTile.Entries[0];
                     }
 
-                    Debug.Log("Contains");
+                    //Debug.Log("Contains");
                     transform.parent = obj.transform;
 
                     List<Vector3> src = parentTile.Path;//parentTile.GetPath(transform.position);
@@ -110,7 +113,7 @@ public class Kiwi : MonoBehaviour
                     }
 
                     transform.localPosition = Path[0];
-                    Debug.Log(Path[0]);
+                    //Debug.Log(Path[0]);
 
                     next = 1;
 
@@ -129,6 +132,7 @@ public class Kiwi : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Path == null || Path.Count == 0) return;
         if (!HasPath) HasPath = UpdatePath(Tile.VectorFromEntryPoint(Exit).normalized);
         if (!HasPath)
         {
@@ -180,7 +184,7 @@ public class Kiwi : MonoBehaviour
             RageBar.rage += r;
         }
 
-        Debug.Log($"Next: {next}, Path Count: {Path.Count}");
+        //Debug.Log($"Next: {next}, Path Count: {Path.Count}");
 
         Vector3 to = Path[next] - transform.localPosition;
         Vector3 dir = to.normalized;

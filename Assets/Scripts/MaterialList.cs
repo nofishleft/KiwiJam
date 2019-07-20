@@ -9,10 +9,13 @@ using UnityEngine;
 public class MaterialList : ScriptableObject
 {
     public static Material[] SpawnMaterials;
-    public static Material[] KiwiMaterials;
+    public static Material[] ConstructionKiwiMaterials;
 
     public Material[] _SpawnMaterials;
-    public Material[] _KiwiMaterials;
+    public Material[] _ConstructionKiwiMaterials;
+
+    public static GameObject ConstructionKiwiPrefab;
+    public GameObject _ConstructionKiwiPrefab;
 
     [MenuItem("Assets/Create/MaterialList")]
     public static void Create()
@@ -30,8 +33,9 @@ public class MaterialList : ScriptableObject
 
     public static void Load()
     {
-        mlist = Resources.Load<MaterialList>("MaterialList.asset");
+        mlist = Resources.Load<MaterialList>("MaterialList");
         SpawnMaterials = mlist._SpawnMaterials;
-        KiwiMaterials = mlist._KiwiMaterials;
+        ConstructionKiwiMaterials = mlist._ConstructionKiwiMaterials;
+        ConstructionKiwiPrefab = mlist._ConstructionKiwiPrefab;
     }
 }

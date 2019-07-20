@@ -19,14 +19,21 @@ public class Spawn : Tile
         if (_time > SpawnDelay)
         {
             _time -= SpawnDelay;
-            //Create();
+            Create();
         }
     }
 
-    public void Create(GameObject prefab)
+    public void Create()
     {
+        GameObject prefab = MaterialList.ConstructionKiwiPrefab;
+
+        int i = LevelData.AvailableColors[Random.Range(0,LevelData.AvailableColors.Length)];
+        Material mat = MaterialList.ConstructionKiwiMaterials[i];
+
         GameObject obj = Instantiate(prefab, this.transform);
         Kiwi kiwi = obj.GetComponent<Kiwi>();
         kiwi.parentTile = this;
+
+        kiwi.SetPath(CreatePath(EntryPoints.CENTER));
     }
 }
