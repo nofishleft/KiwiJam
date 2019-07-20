@@ -23,7 +23,7 @@ public class SwapTimer : MonoBehaviour
     {
         while (true)
         {
-            float percent = TileController.timeStatic / TileController.timeStaticMax;
+            float percent = 1 - (TileController.timeStatic / TileController.timeStaticMax);
 
             filled.fillAmount = percent;
             yield return null;
