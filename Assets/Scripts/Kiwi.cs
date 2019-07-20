@@ -17,11 +17,14 @@ public class Kiwi : MonoBehaviour
     public float Speed = 0.2f;
     public static Dictionary<int, Material> materials;
     public int Color;
+    public float Rage;
+    public float RageIncreaseOverTime = 1/1000f;
+    public float RageIncreaseWhileStationary = 1/100f;
 
     // Start is called before the first frame update
     void Start()
     {
-        transform.parent = parentTile.transform;
+        //transform.parent = parentTile.transform;
     }
 
     public void SetPath(List<Vector3> src)
@@ -129,6 +132,10 @@ public class Kiwi : MonoBehaviour
         if (!HasPath) HasPath = UpdatePath(Tile.VectorFromEntryPoint(Exit).normalized);
         if (!HasPath)
         {
+            float r = (RageIncreaseOverTime + RageIncreaseWhileStationary) * Time.deltaTime;
+            Rage += r;
+            RageBar.rage += r;
+
             if (parentTile is Spawn)
             {
                 Spawn spawn = (Spawn) parentTile;
@@ -136,7 +143,9 @@ public class Kiwi : MonoBehaviour
                 {
                     //Despawn
                     Debug.Log("Despawning");
+                    RageBar.rage -= Rage;
 
+                    Destroy(gameObject);
                 }
                 else
                 {
@@ -162,6 +171,13 @@ public class Kiwi : MonoBehaviour
                 }
             } else
                 return;
+        }
+
+        if (HasPath)
+        {
+            float r = RageIncreaseOverTime * Time.deltaTime;
+            Rage += r;
+            RageBar.rage += r;
         }
 
         Debug.Log($"Next: {next}, Path Count: {Path.Count}");
