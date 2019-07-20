@@ -66,7 +66,7 @@ public class Kiwi : MonoBehaviour
         Vector3 origin = transform.position;
 #if TwoD
         RaycastHit2D[] hits = Physics2D.RaycastAll(origin, dir, 0.5f, TileFinderMask);
-        foreach (var thing in hits) Debug.Log(thing);
+        //foreach (var thing in hits) Debug.Log(thing);
 #else
         RaycastHit[] hits = Physics.RaycastAll(origin, Vector3.back, 0.5f, TileFinderMask);
 #endif
@@ -145,7 +145,7 @@ public class Kiwi : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!HasPath) Debug.Log(Tile.VectorFromEntryPoint(Exit).normalized);
+        //if (!HasPath) Debug.Log(Tile.VectorFromEntryPoint(Exit).normalized);
         if (!HasPath) HasPath = UpdatePath(Tile.VectorFromEntryPoint(Exit).normalized);
         if (!HasPath || awaiting)
         {

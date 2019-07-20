@@ -881,6 +881,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd5f028350eb214fa9fc0475a40136a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delay: 3
+  SwappingCooldown: 2
   swapClips: []
   rotateClips: []
 --- !u!82 &340858902

@@ -13,7 +13,6 @@ public class TileController : MonoBehaviour
     public float delay;
     public static float timeStatic;
     public float SwappingCooldown;
-    public bool KiwiSpawning = false;
 
     private InputState _state = InputState.Nothing;
 
@@ -24,12 +23,18 @@ public class TileController : MonoBehaviour
     private AudioSource audioSource;
 
     // Start is called before the first frame update
+
+    void OnLevelWasLoaded()
+    {
+        StopAllCoroutines();
+        Debug.Log("Level was loaded");
+        StartCoroutine(nameof(WaitForKiwisToSpawn));
+    }
+
     void Start()
     {
         DontDestroyOnLoad(gameObject);
         audioSource = GetComponent<AudioSource>();
-        delay = Spawn.initDelayStatic;
-        StartCoroutine(nameof(WaitForKiwisToSpawn));
     }
     private void OnLevelWasLoaded(int level)
     {
@@ -39,15 +44,18 @@ public class TileController : MonoBehaviour
 
     IEnumerator WaitForKiwisToSpawn()
     {
+        Debug.Log("Started Waiting");
         float t = 0;
 
         while (t < delay) {
+            Debug.Log($"Time: {t}");
             yield return null;
 
             CheckSwapInput();
 
             CheckRotationInput();
-            
+
+            t += Time.deltaTime;
         }
 
         StartCoroutine(nameof(StartSwapCooldown));
