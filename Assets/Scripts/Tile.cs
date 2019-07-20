@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    public bool R;
-
     public PathType TypeOfPath;
     //public int PathOrientation;
     
@@ -15,17 +13,6 @@ public class Tile : MonoBehaviour
     {
         _ = Path;
     }
-
-#if DEBUG
-    private void Update()
-    {
-        if (R)
-        {
-            Rotate();
-            R = false;
-        }
-    }
-#endif
 
     public List<Vector3> Path
     {
