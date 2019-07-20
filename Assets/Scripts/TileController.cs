@@ -12,6 +12,7 @@ public class TileController : MonoBehaviour
 {
     public float delay;
     public static float timeStatic;
+    public static float timeStaticMax;
     public float SwappingCooldown;
 
     private InputState _state = InputState.Nothing;
@@ -35,6 +36,7 @@ public class TileController : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         audioSource = GetComponent<AudioSource>();
+        timeStaticMax = SwappingCooldown;
     }
     private void OnLevelWasLoaded(int level)
     {
@@ -68,8 +70,14 @@ public class TileController : MonoBehaviour
             //Check input each frame until swap has been performed
             while (!CheckSwapInput()) yield return null;
 
+            timeStatic = 0; 
+
             //Wait until swap is off cooldown
-            yield return new WaitForSeconds(SwappingCooldown);
+            while (timeStatic < timeStaticMax)
+            {
+                yield return null;
+                timeStatic += Time.deltaTime;
+            }
         }
     }
 
