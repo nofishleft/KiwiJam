@@ -12,9 +12,14 @@ public class Tile : MonoBehaviour
     
     public EntryPoints[] Entries;
 
+    public string childSpriteName = "DummySprite";
+    [HideInInspector]
+    public Transform dummySprite;
+
     private void Start()
     {
         //_ = Path;
+        dummySprite = transform.Find(childSpriteName);
     }
 
     public List<Vector3> Path
@@ -206,6 +211,13 @@ public class Tile : MonoBehaviour
         //Quaternion q = Quaternion.Euler(0, 0, -90);
         //transform.localRotation = transform.localRotation * q;
         ApplyChangedPathToChildren();
+
+        RotateSprite();
+    }
+
+    public void RotateSprite()
+    {
+        dummySprite.Rotate(0, 0, 90);
     }
 
     public static Vector3 VectorFromEntryPoint(EntryPoints point)
