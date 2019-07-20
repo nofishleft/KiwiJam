@@ -11,10 +11,12 @@ public class Spawn : Tile
 
     public float SpawnDelay;
     public float initDelay;
+    public static float initDelayStatic;
     private float _time = 0;
 
-    private void Start()
+    private void Awake()
     {
+        initDelayStatic = initDelay;
         _time -= initDelay;
     }
 
