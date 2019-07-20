@@ -133,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7425938765443864, guid: 48e93f5f6b0cb704681fa6b14fe802f6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7425938765443864, guid: 48e93f5f6b0cb704681fa6b14fe802f6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -311,7 +311,7 @@ PrefabInstance:
     - target: {fileID: 6503787149218421588, guid: 9efc7dbe1847c7248b5a7472242227fc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6503787149218421588, guid: 9efc7dbe1847c7248b5a7472242227fc,
         type: 3}
@@ -378,7 +378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7425938765443864, guid: cd42029897b0c2045afe712b3ece45be, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7425938765443864, guid: cd42029897b0c2045afe712b3ece45be, type: 3}
       propertyPath: m_LocalPosition.y
@@ -442,7 +442,7 @@ PrefabInstance:
     - target: {fileID: 6606390194961075121, guid: 8ab47e2f133333f499ab54b8c7222d8d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6606390194961075121, guid: 8ab47e2f133333f499ab54b8c7222d8d,
         type: 3}
@@ -511,7 +511,7 @@ PrefabInstance:
     - target: {fileID: 6606390194961075121, guid: 8ab47e2f133333f499ab54b8c7222d8d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6606390194961075121, guid: 8ab47e2f133333f499ab54b8c7222d8d,
         type: 3}
@@ -595,7 +595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Colors: 00000000
-  CameraPosition: {x: 0, y: 0, z: -10}
+  CameraPosition: {x: 2, y: 0, z: -10}
   Orthographic: 1
   bounds:
     serializedVersion: 2

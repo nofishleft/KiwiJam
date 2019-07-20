@@ -12,7 +12,7 @@ public class Kiwi : MonoBehaviour
     public static LayerMask TileFinderMask = 1 << 11;
     public static LayerMask KiwiFinderMask = 1 << 10;
     public Tile parentTile;
-    private int next = 1;
+    public int next = 1;
     public EntryPoints Exit = EntryPoints.DOWN;
     public bool HasPath = true;
     public float Speed = 0.2f;
@@ -32,7 +32,6 @@ public class Kiwi : MonoBehaviour
     {
         //transform.parent = parentTile.transform;
     }
-
     public void SetPath(List<Vector3> src)
     {
         Debug.Log(src.Count);
@@ -64,9 +63,10 @@ public class Kiwi : MonoBehaviour
     public bool UpdatePath(Vector3 dir)
     {
         //Find next tile
-        Vector3 origin = transform.position - Vector3.back;
+        Vector3 origin = transform.position;
 #if TwoD
         RaycastHit2D[] hits = Physics2D.RaycastAll(origin, dir, 0.5f, TileFinderMask);
+        foreach (var thing in hits) Debug.Log(thing);
 #else
         RaycastHit[] hits = Physics.RaycastAll(origin, Vector3.back, 0.5f, TileFinderMask);
 #endif
@@ -145,6 +145,7 @@ public class Kiwi : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!HasPath) Debug.Log(Tile.VectorFromEntryPoint(Exit).normalized);
         if (!HasPath) HasPath = UpdatePath(Tile.VectorFromEntryPoint(Exit).normalized);
         if (!HasPath || awaiting)
         {

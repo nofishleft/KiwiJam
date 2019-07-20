@@ -10,6 +10,11 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class TileController : MonoBehaviour
 {
+    public float delay;
+    public static float timeStatic;
+    public float SwappingCooldown;
+    public bool KiwiSpawning = false;
+
     private InputState _state = InputState.Nothing;
 
     private MoveableTile _tile;
@@ -23,6 +28,8 @@ public class TileController : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         audioSource = GetComponent<AudioSource>();
+        delay = Spawn.initDelayStatic;
+        StartCoroutine(nameof(WaitForKiwisToSpawn));
     }
     private void OnLevelWasLoaded(int level)
     {
@@ -30,8 +37,35 @@ public class TileController : MonoBehaviour
         _tile = null;
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator WaitForKiwisToSpawn()
+    {
+        float t = 0;
+
+        while (t < delay) {
+            yield return null;
+
+            CheckSwapInput();
+
+            CheckRotationInput();
+            
+        }
+
+        StartCoroutine(nameof(StartSwapCooldown));
+    }
+
+    IEnumerator StartSwapCooldown()
+    {
+        while (true)
+        {
+            //Check input each frame until swap has been performed
+            while (!CheckSwapInput()) yield return null;
+
+            //Wait until swap is off cooldown
+            yield return new WaitForSeconds(SwappingCooldown);
+        }
+    }
+
+    public bool CheckSwapInput()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -44,7 +78,7 @@ public class TileController : MonoBehaviour
             if (hit.collider != null)
             {
                 MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
-                if (tile == null) return;
+                if (tile == null) return false;
                 switch (_state)
                 {
                     case InputState.Nothing:
@@ -53,7 +87,7 @@ public class TileController : MonoBehaviour
                         break;
                     case InputState.Click_Swap:
                         Swap(_tile, tile);
-                        break;
+                        return true;
                     default:
                         _state = InputState.Nothing;
                         break;
@@ -69,7 +103,7 @@ public class TileController : MonoBehaviour
             if (hit.collider != null)
             {
                 MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
-                if (tile == null) return;
+                if (tile == null) return false;
                 switch (_state)
                 {
                     case InputState.Undefined_Swap:
@@ -81,6 +115,7 @@ public class TileController : MonoBehaviour
                         {
                             _state = InputState.Nothing;
                             Swap(_tile, tile);
+                            return true;
                         }
                         break;
                     default:
@@ -89,7 +124,12 @@ public class TileController : MonoBehaviour
                 }
             }
         }
-        else if (Input.GetMouseButtonDown(1))
+        return false;
+    }
+
+    public void CheckRotationInput()
+    {
+        if (Input.GetMouseButtonDown(1))
         {
             Debug.Log("Mouse Right");
             Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
