@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class TileController : MonoBehaviour
 {
     private InputState _state = InputState.Nothing;
 
     private MoveableTile _tile;
 
+    public AudioClip[] swapClips;
+    public AudioClip[] rotateClips;
+    private AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -92,6 +97,7 @@ public class TileController : MonoBehaviour
 
     public void Swap(Tile a, Tile b)
     {
+        playSwapClip();
         Vector3 pos = b.transform.position;
         b.transform.position = a.transform.position;
         a.transform.position = pos;
@@ -99,7 +105,20 @@ public class TileController : MonoBehaviour
 
     public void Rotate(Tile a)
     {
+        playRotateClip();
         a.Rotate();
+    }
+
+    public void playRotateClip()
+    {
+        AudioClip clip = rotateClips[Random.Range(0, rotateClips.Length)];
+        audioSource.PlayOneShot(clip);
+    }
+
+    public void playSwapClip()
+    {
+        AudioClip clip = swapClips[Random.Range(0, swapClips.Length)];
+        audioSource.PlayOneShot(clip);
     }
 
     private enum InputState
