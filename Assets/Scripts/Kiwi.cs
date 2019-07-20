@@ -14,16 +14,18 @@ public class Kiwi : MonoBehaviour
     public Tile parentTile;
     private int next = 1;
     public EntryPoints Exit = EntryPoints.DOWN;
-    private bool HasPath = true;
+    public bool HasPath = true;
     public float Speed = 0.2f;
     public static Dictionary<int, Material> materials;
     public int Color;
     public float Rage;
     public float RageIncreaseOverTime = 1/10000f;
     public float RageIncreaseWhileStationary = 1/1000f;
-    private bool awaiting = false;
-    private Vector3 lastPositionOfAwaiting;
+    public bool awaiting = false;
     public Transform ImageOrientation;
+    public float RageIncreasePotHole = 1 / 100f;
+    public float RageIncreaseWrongDestination = 1 / 100f;
+    public Spawn SpawnLocation;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +35,7 @@ public class Kiwi : MonoBehaviour
 
     public void SetPath(List<Vector3> src)
     {
-        //Debug.Log(src.Count);
+        Debug.Log(src.Count);
         Path = new List<Vector3>(src.Count);
 
         if (FlipPath)
@@ -59,7 +61,7 @@ public class Kiwi : MonoBehaviour
 
     private bool FlipPath = false;
 
-    bool UpdatePath(Vector3 dir)
+    public bool UpdatePath(Vector3 dir)
     {
         //Find next tile
         Vector3 origin = transform.position - Vector3.back;
@@ -85,6 +87,13 @@ public class Kiwi : MonoBehaviour
 
                 if (contains)
                 {
+                    RaycastHit2D checkHits = Physics2D.BoxCast(transform.position, new Vector2(0.25f, 0.25f), 0, Vector2.zero, 0, KiwiFinderMask);
+                    if (checkHits.collider != null && checkHits.collider.gameObject != this.gameObject)
+                    {
+                        Debug.Log("Returning false");
+                        return false;
+                    }
+
                     if (parentTile.Entries[0] == entry)
                     {
                         this.Exit = parentTile.Entries[1];
@@ -136,7 +145,6 @@ public class Kiwi : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Path == null || Path.Count == 0) return;
         if (!HasPath) HasPath = UpdatePath(Tile.VectorFromEntryPoint(Exit).normalized);
         if (!HasPath || awaiting)
         {
@@ -147,7 +155,7 @@ public class Kiwi : MonoBehaviour
         if (!HasPath) {
             if (parentTile is Spawn)
             {
-                Spawn spawn = (Spawn) parentTile;
+                Spawn spawn = (Spawn)parentTile;
                 if (spawn.Color == this.Color)
                 {
                     //Despawn
@@ -158,7 +166,7 @@ public class Kiwi : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Turning around");
+                    /*Debug.Log("Turning around");
                     //Turn back
                     //Reverse Path
                     for (int i = 0; i < Path.Count / 2; ++i)
@@ -176,8 +184,21 @@ public class Kiwi : MonoBehaviour
                         this.Exit = parentTile.Entries[1];
                     else
                         this.Exit = parentTile.Entries[0];
-                    HasPath = true;
+                    HasPath = true;*/
+
+                    RageBar.rage += RageIncreaseWrongDestination;
+
+                    SpawnLocation.AddToRespawnQueue(this);
+                    //Destroy(gameObject);
                 }
+            } else if (parentTile is PotHole)
+            {
+                PotHole hole = (PotHole) parentTile;
+
+                RageBar.rage += RageIncreasePotHole;
+
+                SpawnLocation.AddToRespawnQueue(this);
+                //Destroy(gameObject);
             } else
                 return;
         }
@@ -188,6 +209,8 @@ public class Kiwi : MonoBehaviour
             Rage += r;
             RageBar.rage += r;
         }
+
+        if (Path == null || Path.Count == 0) return;
 
         //Debug.Log($"Next: {next}, Path Count: {Path.Count}");
 
@@ -233,6 +256,7 @@ public class Kiwi : MonoBehaviour
         }
 
         MovementDirection = transform.TransformDirection(dir);
+        MovementDirection.z = 0;
 
         //Update Rotation to point in Movement Direction
         ImageOrientation.rotation = Quaternion.FromToRotation(Vector2.right, MovementDirection);
@@ -245,9 +269,9 @@ public class Kiwi : MonoBehaviour
             {
                 awaiting = true;
                 return;
-                transform.localPosition = transform.InverseTransformPoint(otherKiwi.position) - dir * SpaceBetweenKiwis;
-                awaiting = otherKiwi;
-                lastPositionOfAwaiting = otherKiwi.position;
+                //transform.localPosition = transform.InverseTransformPoint(otherKiwi.position) - dir * SpaceBetweenKiwis;
+                //awaiting = otherKiwi;
+                //lastPositionOfAwaiting = otherKiwi.position;
             }
             else
             {
@@ -272,7 +296,7 @@ public class Kiwi : MonoBehaviour
         foreach (var hit in hits)
             if (hit.collider != null && hit.collider.gameObject != this.gameObject)
             {
-                Debug.Log("Detected Kiwi");
+                //Debug.Log("Detected Kiwi");
                 return hit.collider.transform;
             }
 
