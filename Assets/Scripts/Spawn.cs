@@ -10,7 +10,13 @@ public class Spawn : Tile
     public int Color;
 
     public float SpawnDelay;
-    private float _time;
+    public float initDelay;
+    private float _time = 0;
+
+    private void Start()
+    {
+        _time -= initDelay;
+    }
 
     private void Update()
     {
