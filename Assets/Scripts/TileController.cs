@@ -106,7 +106,7 @@ public class TileController : MonoBehaviour
 
     public void Swap(Tile a, Tile b)
     {
-        //playSwapClip();
+        playSwapClip();
         Vector3 pos = b.transform.position;
         b.transform.position = a.transform.position;
         a.transform.position = pos;
@@ -114,20 +114,27 @@ public class TileController : MonoBehaviour
 
     public void Rotate(Tile a)
     {
-        //playRotateClip();
+        playRotateClip();
         a.Rotate();
+
     }
 
     public void playRotateClip()
     {
-        AudioClip clip = rotateClips[Random.Range(0, rotateClips.Length)];
-        audioSource.PlayOneShot(clip);
+        if (rotateClips != null && rotateClips.Length > 0)
+        {
+            AudioClip clip = rotateClips[Random.Range(0, rotateClips.Length)];
+            audioSource.PlayOneShot(clip);
+        }
     }
 
     public void playSwapClip()
     {
-        AudioClip clip = swapClips[Random.Range(0, swapClips.Length)];
-        audioSource.PlayOneShot(clip);
+        if (swapClips != null && swapClips.Length > 0)
+        {
+            AudioClip clip = swapClips[Random.Range(0, swapClips.Length)];
+            audioSource.PlayOneShot(clip);
+        }
     }
 
     private enum InputState

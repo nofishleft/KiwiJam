@@ -8,8 +8,8 @@ public class Timer : MonoBehaviour
 {
 
     public int durationSeconds = 90;
-    public TextMeshProUGUI text;
-    public GameManager gm;
+    TextMeshProUGUI text;
+    GameManager gm;
 
     // Start is called before the first frame update
     void Start()
