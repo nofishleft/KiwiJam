@@ -10,8 +10,10 @@ public class Kiwi : MonoBehaviour
     public float SpaceBetweenKiwis;
     public static LayerMask TileFinderMask = 1 << 11;
     public static LayerMask KiwiFinderMask = 1 << 10;
-    public MoveableArea parentTile;
+    public Tile parentTile;
     private int next = 1;
+    public EntryPoints Exit = EntryPoints.DOWN;
+    private bool HasPath = true;
 
     // Start is called before the first frame update
     void Start()
@@ -19,14 +21,39 @@ public class Kiwi : MonoBehaviour
         transform.parent = parentTile.transform;
     }
 
-    void UpdatePath(Vector3 dir)
+    public void SetPath(List<Vector3> src)
+    {
+        if (Path == null) Path = new List<Vector3>(src.Count);
+
+        if (FlipPath)
+        {
+            //Flip the path because we are coming from the other direction
+            for (int i = 0; i < Path.Count / 2; ++i)
+            {
+                Vector3 vec = src[i];
+                Path[i] = src[src.Count - 1 - i];
+                Path[Path.Count - 1 - i] = vec;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < Path.Count; ++i)
+            {
+                Path[i] = src[i];
+            }
+        }
+    }
+
+    private bool FlipPath = false;
+
+    bool UpdatePath(Vector3 dir)
     {
         //Find next tile
         Vector3 origin = transform.position - Vector3.back;
 #if TwoD
-        RaycastHit2D[] hits = Physics2D.RaycastAll(origin, dir, 1, TileFinderMask);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(origin, dir, 0.5f, TileFinderMask);
 #else
-        RaycastHit[] hits = Physics.RaycastAll(origin, Vector3.back, 2, TileFinderMask);
+        RaycastHit[] hits = Physics.RaycastAll(origin, Vector3.back, 0.5f, TileFinderMask);
 #endif
         foreach (var hit in hits)
             if (hit.collider != null && hit.collider.gameObject != this.gameObject && hit.collider.gameObject != parentTile.gameObject)
@@ -34,37 +61,71 @@ public class Kiwi : MonoBehaviour
 #if DEBUG
                 Debug.Log("Found");
 #endif
+                Tile oldTile = parentTile;
+
                 GameObject obj = hit.collider.gameObject;
-                parentTile = obj.GetComponent<MoveableArea>();
+                parentTile = obj.GetComponent<Tile>();
 
-                transform.parent = obj.transform;
+                bool contains = false;
+                EntryPoints entry = Tile.FlipEntryPoints(Exit);
+                foreach (var en in parentTile.Entries) if (en == entry) contains = true;
 
-                Path = parentTile.Path;//parentTile.GetPath(transform.position);
-
-                if ((Path[0] - transform.localPosition).sqrMagnitude > (Path[Path.Count - 1] - transform.localPosition).sqrMagnitude)
-                {   
-                    //Flip the path because we are coming from the other direction
-                    for (int i = 0; i < Path.Count/2; ++i)
+                if (contains)
+                {
+                    if (parentTile.Entries[0] == entry)
                     {
-                        Vector3 vec = Path[i];
-                        Path[i] = Path[Path.Count - 1 - i];
-                        Path[Path.Count - 1 - i] = vec;
+                        this.Exit = parentTile.Entries[1];
+                    } else if(parentTile.Entries[1] == entry)
+                    {
+                        this.Exit = parentTile.Entries[0];
                     }
+
+                    Debug.Log("Contains");
+                    transform.parent = obj.transform;
+
+                    List<Vector3> src = parentTile.Path;//parentTile.GetPath(transform.position);
+                    Path = new List<Vector3>(src.Count);
+
+                    for (int i = 0; i < src.Count; ++i)
+                    {
+                        Path.Add(src[i]);
+                    }
+
+                    if ((Path[0] - transform.localPosition).sqrMagnitude > (Path[Path.Count - 1] - transform.localPosition).sqrMagnitude)
+                    {
+                        FlipPath = true;
+                        //Flip the path because we are coming from the other direction
+                        for (int i = 0; i < Path.Count / 2; ++i)
+                        {
+                            Vector3 vec = Path[i];
+                            Path[i] = Path[Path.Count - 1 - i];
+                            Path[Path.Count - 1 - i] = vec;
+                        }
+                    }
+
+                    transform.localPosition = Path[0];
+                    Debug.Log(Path[0]);
+
+                    next = 1;
+
+                    foreach (var o in Path) Debug.Log(o);
+                    return true;
                 }
-
-                transform.localPosition = Path[0];
-                Debug.Log(Path[0]);
-
-                next = 1;
-
-                foreach (var o in Path) Debug.Log(o);
-                break;
+                else
+                {
+                    parentTile = oldTile;
+                }
+                return false;
             }
+        return false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!HasPath) HasPath = UpdatePath(Tile.VectorFromEntryPoint(Exit).normalized);
+        if (!HasPath) return;
+
         Vector3 to = Path[next] - transform.localPosition;
         Vector3 dir = to.normalized;
         float mag = to.magnitude;
@@ -77,7 +138,7 @@ public class Kiwi : MonoBehaviour
 
             if (otherKiwi != null)
             {
-                transform.localPosition = transform.InverseTransformPoint(otherKiwi.position) - dir * SpaceBetweenKiwis;
+                transform.localPosition = transform.InverseTransformDirection(otherKiwi.position) - dir * SpaceBetweenKiwis;
                 distTravelled = 0;
                 break;
             }
@@ -93,8 +154,8 @@ public class Kiwi : MonoBehaviour
             {
                 //Next tile
                 //Update path
-                UpdatePath(dir);
-                //next = 0;
+                HasPath = UpdatePath(dir);
+                if (!HasPath) return;
             }
             else
             {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Make sure scenes are added to build settings!
+
 public class GameManager : MonoBehaviour
 {
     static GameManager instance;
@@ -10,15 +12,19 @@ public class GameManager : MonoBehaviour
     public string mainMenuSceneName = "MainMenu";
 
     [Tooltip("First level at index 0")]
-    public string[] sceneNames;
+    public string[] levelSceneNames;
+    public string[] tutorialSceneNames;
+    public string[] currentSceneNames;
 
     string currentSceneName;
     int sceneIndex = 0;
+    bool isPaused = false;
+    GameObject canvas;
 
     // The following is kind've crappy way to test this, but it works!
     public bool triggerMainMenuScene = false;
     public bool triggerRestartScene = false;
-    public bool triggerNextScene = false; 
+    public bool triggerNextScene = false;
 
     private void Awake()
     {
@@ -30,6 +36,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        canvas = transform.GetChild(0).gameObject;
+        currentSceneName = mainMenuSceneName;
     }
 
     // This is only implemented for testing, it can be removed later
@@ -51,6 +63,48 @@ public class GameManager : MonoBehaviour
         triggerMainMenuScene = false;
         triggerRestartScene = false;
         triggerNextScene = false;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pauseGame();
+        }
+    }
+
+    void pauseGame()
+    {
+        if (currentSceneName != mainMenuSceneName)
+        {
+            if (!isPaused)
+            {
+                Time.timeScale = 0;
+                isPaused = true;
+                canvas.SetActive(true);
+            } else
+            {
+                Time.timeScale = 1;
+                isPaused = false;
+                canvas.SetActive(false);
+            }
+        }
+    }
+
+    public void playTutorialScenes()
+    {
+        currentSceneNames = tutorialSceneNames;
+        sceneIndex = 0;
+        nextScene();
+    }
+
+    public void playGameScenes()
+    {
+        currentSceneNames = levelSceneNames;
+        sceneIndex = 0;
+        nextScene();
+    }
+
+    public void quitGame()
+    {
+        Application.Quit();
     }
 
     public void loadMainMenu()
@@ -68,9 +122,9 @@ public class GameManager : MonoBehaviour
     public void nextScene()
     {
         // Heavily based on https://docs.unity3d.com/ScriptReference/SceneManagement.SceneManager.LoadSceneAsync.html
-        string sceneName = sceneNames[sceneIndex];
+        string sceneName = currentSceneNames[sceneIndex];
         StartCoroutine(LoadSceneInBackground(sceneName));
-        sceneIndex = (sceneIndex + 1) % sceneNames.Length;
+        sceneIndex = (sceneIndex + 1) % currentSceneNames.Length;
         currentSceneName = sceneName;
     }
 
