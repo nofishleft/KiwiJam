@@ -14,6 +14,9 @@ public class Kiwi : MonoBehaviour
     private int next = 1;
     public EntryPoints Exit = EntryPoints.DOWN;
     private bool HasPath = true;
+    public float Speed = 0.2f;
+    public static Dictionary<int, Material> materials;
+    public int Color;
 
     // Start is called before the first frame update
     void Start()
@@ -124,13 +127,50 @@ public class Kiwi : MonoBehaviour
     void Update()
     {
         if (!HasPath) HasPath = UpdatePath(Tile.VectorFromEntryPoint(Exit).normalized);
-        if (!HasPath) return;
+        if (!HasPath)
+        {
+            if (parentTile is Spawn)
+            {
+                Spawn spawn = (Spawn) parentTile;
+                if (spawn.Color == this.Color)
+                {
+                    //Despawn
+                    Debug.Log("Despawning");
+
+                }
+                else
+                {
+                    Debug.Log("Turning around");
+                    //Turn back
+                    //Reverse Path
+                    for (int i = 0; i < Path.Count / 2; ++i)
+                    {
+                        Vector3 vec = Path[i];
+                        Path[i] = Path[Path.Count - 1 - i];
+                        Path[Path.Count - 1 - i] = vec;
+                        next = 1;
+                    }
+
+                    //Change Exit
+                    foreach (var a in parentTile.Entries) Debug.Log(a);
+
+                    if (this.Exit == parentTile.Entries[0])
+                        this.Exit = parentTile.Entries[1];
+                    else
+                        this.Exit = parentTile.Entries[0];
+                    HasPath = true;
+                }
+            } else
+                return;
+        }
+
+        Debug.Log($"Next: {next}, Path Count: {Path.Count}");
 
         Vector3 to = Path[next] - transform.localPosition;
         Vector3 dir = to.normalized;
         float mag = to.magnitude;
 
-        float distTravelled = Time.deltaTime /* Times by some constant*/;
+        float distTravelled = Time.deltaTime * Speed;
 
         while (distTravelled >= mag)
         {
@@ -207,5 +247,6 @@ public class Kiwi : MonoBehaviour
 public enum PathType
 {
     CORNER = 0,
-    STRAIGHT = 1
+    STRAIGHT = 1,
+    DEAD_END = 2
 }
