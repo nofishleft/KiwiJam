@@ -19,11 +19,49 @@ public class Spawn : Tile
         if (_time > SpawnDelay)
         {
             _time -= SpawnDelay;
-            Create();
+            ++SpawnQueue;
+        }
+
+        RaycastHit2D hit = Physics2D.BoxCast(transform.position, new Vector2(0.5f, 0.5f), 0, Vector2.zero, 0f, Kiwi.KiwiFinderMask);
+        if (hit.collider == null)
+        {
+            //Spawn one
+            if (RespawnQueue.Count > 0)
+            {
+                Kiwi kiwi = RespawnQueue.Dequeue();
+                Respawn(kiwi);
+            }
+            else if (SpawnQueue > 0)
+            {
+                --SpawnQueue;
+                Create();
+            }
         }
     }
 
-    public void Create()
+    private int SpawnQueue = 0;
+    private Queue<Kiwi> RespawnQueue = new Queue<Kiwi>();
+
+    public void AddToRespawnQueue(Kiwi kiwi)
+    {
+        kiwi.gameObject.SetActive(false);
+        RespawnQueue.Enqueue(kiwi);
+    }
+
+    private void Respawn(Kiwi kiwi)
+    {
+        kiwi.gameObject.SetActive(true);
+
+        //Teleport back to base and reset path
+        kiwi.parentTile = this;
+        Transform t = kiwi.transform;
+        t.parent = transform;
+        t.localPosition = Vector2.zero;
+
+        kiwi.SetPath(CreatePath(EntryPoints.CENTER));
+    }
+
+    private void Create()
     {
         GameObject prefab = MaterialList.ConstructionKiwiPrefab;
 
@@ -33,6 +71,7 @@ public class Spawn : Tile
         GameObject obj = Instantiate(prefab, this.transform);
         Kiwi kiwi = obj.GetComponent<Kiwi>();
         kiwi.parentTile = this;
+        kiwi.SpawnLocation = this;
 
         kiwi.SetPath(CreatePath(EntryPoints.CENTER));
     }
