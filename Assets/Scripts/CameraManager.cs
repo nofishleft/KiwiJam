@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(AudioListener))]
+[RequireComponent(typeof(AudioSource))]
 public class CameraManager : MonoBehaviour
 {
 
@@ -9,8 +12,8 @@ public class CameraManager : MonoBehaviour
     AudioListener audioListener;
     AudioSource audioSource;
     public float waitInterval = 2f;
-    public AudioClip[] bgAudioClips;
-    int audioClipIndex = 0;
+    public string[] sceneNames; // Corresponding to the index in bgAudioClips
+    public AudioList[] bgAudioClips; // By level
 
     private void Awake()
     {
@@ -39,12 +42,35 @@ public class CameraManager : MonoBehaviour
     {
         while (true)
         {
+
+            // Find the index of the current scene
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            int sceneIndex = -1;
+            for (int i = 0; i < sceneNames.Length; i++)
+            {
+                if (sceneNames[i] == currentSceneName)
+                {
+                    sceneIndex = i;
+                    break;
+                }
+            }
+
+            if (sceneIndex == -1)
+            {
+                yield return new WaitForSeconds(waitInterval);
+            }
+
             //Play
-            AudioClip clip = bgAudioClips[audioClipIndex];
-            audioClipIndex = (audioClipIndex + 1) % bgAudioClips.Length;
+            AudioClip clip = bgAudioClips[sceneIndex].list[Random.Range(0, bgAudioClips[sceneIndex].list.Length)];
             audioSource.clip = clip;
             audioSource.Play();
             yield return new WaitForSeconds(clip.length + waitInterval);
         }
     }
+}
+
+[System.Serializable]
+public class AudioList
+{
+    public AudioClip[] list;
 }
