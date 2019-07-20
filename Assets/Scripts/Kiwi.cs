@@ -10,7 +10,7 @@ public class Kiwi : MonoBehaviour
     public float SpaceBetweenKiwis;
     public static LayerMask TileFinderMask = 1 << 11;
     public static LayerMask KiwiFinderMask = 1 << 10;
-    public MoveableArea parentTile;
+    public Tile parentTile;
     private int next = 1;
     public EntryPoints Exit = EntryPoints.DOWN;
     private bool HasPath = true;
@@ -61,13 +61,13 @@ public class Kiwi : MonoBehaviour
 #if DEBUG
                 Debug.Log("Found");
 #endif
-                MoveableArea oldTile = parentTile;
+                Tile oldTile = parentTile;
 
                 GameObject obj = hit.collider.gameObject;
-                parentTile = obj.GetComponent<MoveableArea>();
+                parentTile = obj.GetComponent<Tile>();
 
                 bool contains = false;
-                EntryPoints entry = MoveableArea.FlipEntryPoints(Exit);
+                EntryPoints entry = Tile.FlipEntryPoints(Exit);
                 foreach (var en in parentTile.Entries) if (en == entry) contains = true;
 
                 if (contains)
@@ -123,7 +123,7 @@ public class Kiwi : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!HasPath) HasPath = UpdatePath(MoveableArea.VectorFromEntryPoint(Exit).normalized);
+        if (!HasPath) HasPath = UpdatePath(Tile.VectorFromEntryPoint(Exit).normalized);
         if (!HasPath) return;
 
         Vector3 to = Path[next] - transform.localPosition;
@@ -138,7 +138,7 @@ public class Kiwi : MonoBehaviour
 
             if (otherKiwi != null)
             {
-                transform.localPosition = transform.InverseTransformPoint(otherKiwi.position) - dir * SpaceBetweenKiwis;
+                transform.localPosition = transform.InverseTransformDirection(otherKiwi.position) - dir * SpaceBetweenKiwis;
                 distTravelled = 0;
                 break;
             }
