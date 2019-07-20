@@ -17,7 +17,13 @@ public class TileController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
         audioSource = GetComponent<AudioSource>();
+    }
+    private void OnLevelWasLoaded(int level)
+    {
+        _state = InputState.Nothing;
+        _tile = null;
     }
 
     // Update is called once per frame
@@ -26,11 +32,10 @@ public class TileController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Mouse Left");
-            Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
+            //Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 20, Kiwi.TileFinderMask);
-            Debug.Log(v);
+            //Debug.Log(v);
             Debug.Log(hit.collider);
             if (hit.collider != null)
             {
@@ -97,7 +102,7 @@ public class TileController : MonoBehaviour
 
     public void Swap(Tile a, Tile b)
     {
-        playSwapClip();
+        //playSwapClip();
         Vector3 pos = b.transform.position;
         b.transform.position = a.transform.position;
         a.transform.position = pos;
@@ -105,7 +110,7 @@ public class TileController : MonoBehaviour
 
     public void Rotate(Tile a)
     {
-        playRotateClip();
+        //playRotateClip();
         a.Rotate();
     }
 
