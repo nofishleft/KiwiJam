@@ -13,7 +13,7 @@ public class Tile : MonoBehaviour
 
     private void Start()
     {
-        List<Vector3> list = Path;
+        _ = Path;
     }
 
 #if DEBUG
@@ -60,6 +60,86 @@ public class Tile : MonoBehaviour
             }
 
             return list;
+        } else if (TypeOfPath == PathType.DEAD_END)
+        {
+            list.Add(VectorFromEntryPoint(Entries[0]));
+            list.Add(VectorFromEntryPoint(Entries[1]));
+
+            for (int i = 1; i < list.Count; ++i)
+            {
+                Debug.DrawLine(transform.TransformPoint(list[i - 1]), transform.TransformPoint(list[i]), Color.red, 10f, false);
+            }
+
+            return list;
+        }
+
+        return null;
+    }
+
+    public List<Vector3> CreatePath(EntryPoints point)
+    {
+        List<Vector3> list = new List<Vector3>();
+
+        if (TypeOfPath == PathType.STRAIGHT)
+        {
+            if (point == Entries[0])
+            {
+                list.Add(VectorFromEntryPoint(Entries[0]));
+                list.Add(VectorFromEntryPoint(Entries[1]));
+            }
+            else
+            {
+                list.Add(VectorFromEntryPoint(Entries[1]));
+                list.Add(VectorFromEntryPoint(Entries[0]));
+            }
+
+            for (int i = 1; i < list.Count; ++i)
+            {
+                Debug.DrawLine(transform.TransformPoint(list[i - 1]), transform.TransformPoint(list[i]), Color.red, 10f, false);
+            }
+
+            return list;
+        }
+        else if (TypeOfPath == PathType.CORNER)
+        {
+            if (point == Entries[0])
+            {
+                list.Add(VectorFromEntryPoint(Entries[0]));
+                list.Add(Vector3.zero);
+                list.Add(VectorFromEntryPoint(Entries[1]));
+            }
+            else
+            {
+                list.Add(VectorFromEntryPoint(Entries[1]));
+                list.Add(Vector3.zero);
+                list.Add(VectorFromEntryPoint(Entries[0]));
+            }
+            for (int i = 1; i < list.Count; ++i)
+            {
+                Debug.DrawLine(transform.TransformPoint(list[i - 1]), transform.TransformPoint(list[i]), Color.red, 10f, false);
+            }
+
+            return list;
+        }
+        else if (TypeOfPath == PathType.DEAD_END)
+        {
+            if (point == Entries[0])
+            {
+                list.Add(VectorFromEntryPoint(Entries[0]));
+                list.Add(VectorFromEntryPoint(Entries[1]));
+            }
+            else
+            {
+                list.Add(VectorFromEntryPoint(Entries[1]));
+                list.Add(VectorFromEntryPoint(Entries[0]));
+            }
+
+            for (int i = 1; i < list.Count; ++i)
+            {
+                Debug.DrawLine(transform.TransformPoint(list[i - 1]), transform.TransformPoint(list[i]), Color.red, 10f, false);
+            }
+
+            return list;
         }
 
         return null;
@@ -75,7 +155,7 @@ public class Tile : MonoBehaviour
         Quaternion q = Quaternion.Euler(0, 0, -90);
         foreach (var kiwi in GetComponentsInChildren<Kiwi>())
         {
-            //kiwi.SetPath(Path);
+            kiwi.SetPath(Path);
             Transform t = kiwi.transform;
 
             t.localPosition = q * t.localPosition;
@@ -93,6 +173,8 @@ public class Tile : MonoBehaviour
                     break;
                 case EntryPoints.LEFT:
                     kiwi.Exit = EntryPoints.UP;
+                    break;
+                case EntryPoints.CENTER:
                     break;
                 default:
                     break;
@@ -123,6 +205,8 @@ public class Tile : MonoBehaviour
                 case EntryPoints.LEFT:
                     Entries[i] = EntryPoints.UP;
                     break;
+                case EntryPoints.CENTER:
+                    break;
                 default:
                     break;
             }
@@ -146,6 +230,8 @@ public class Tile : MonoBehaviour
                 return Vector3.down/2;
             case EntryPoints.LEFT:
                 return Vector3.left/2;
+            case EntryPoints.CENTER:
+                return Vector3.zero;
             default:
                 return Vector3.zero;
         }
@@ -163,6 +249,8 @@ public class Tile : MonoBehaviour
                 return EntryPoints.UP;
             case EntryPoints.LEFT:
                 return EntryPoints.RIGHT;
+            case EntryPoints.CENTER:
+                return EntryPoints.CENTER;
             default:
                 return EntryPoints.DOWN;
         }
@@ -174,5 +262,6 @@ public enum EntryPoints
     LEFT,
     RIGHT,
     UP,
-    DOWN
+    DOWN,
+    CENTER
 }
