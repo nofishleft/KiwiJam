@@ -1123,8 +1123,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuSceneName: MainMenu
   levelSceneNames:
-  - SampleScene
-  - TestScene
+  - SceneLevel1
+  - SceneLevel2
+  - SceneLevel3
   - VictoryScene
   - MainMenu
   tutorialSceneNames:
