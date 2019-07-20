@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     string currentSceneName;
     int sceneIndex = 0;
     bool isPaused = false;
+    GameObject canvas;
 
     // The following is kind've crappy way to test this, but it works!
     public bool triggerMainMenuScene = false;
@@ -35,6 +36,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        canvas = transform.GetChild(0).gameObject;
+        currentSceneName = mainMenuSceneName;
     }
 
     // This is only implemented for testing, it can be removed later
@@ -71,10 +78,12 @@ public class GameManager : MonoBehaviour
             {
                 Time.timeScale = 0;
                 isPaused = true;
+                canvas.SetActive(true);
             } else
             {
                 Time.timeScale = 1;
                 isPaused = false;
+                canvas.SetActive(false);
             }
         }
     }
