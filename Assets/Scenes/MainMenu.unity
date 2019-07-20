@@ -319,7 +319,7 @@ MonoBehaviour:
   waitInterval: 2
   sceneNames:
   - MainMenu
-  - SampleScene
+  - TutorialLevel1
   bgAudioClips:
   - list:
     - {fileID: 8300000, guid: d31299945a757e144b389ceae1f8506f, type: 3}

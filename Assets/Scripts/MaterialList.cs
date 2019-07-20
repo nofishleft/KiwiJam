@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// Where all the prefabs and everything and all the materials will be stored.
+/// </summary>
 public class MaterialList : ScriptableObject
 {
     public static Material[] SpawnMaterials;

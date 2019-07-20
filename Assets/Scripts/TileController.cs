@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
+/// <summary>
+/// Allows you to rotate and swap tiles
+/// </summary>
+
 [RequireComponent(typeof(AudioSource))]
 public class TileController : MonoBehaviour
 {

@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Store all the levels specific data
+/// - Where the camera will go
+/// - What colors will be used
+/// </summary>
 public class LevelData : MonoBehaviour
 {
     public static int[] AvailableColors;

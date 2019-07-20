@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Attach this to tiles
+/// </summary>
 public class Tile : MonoBehaviour
 {
     public PathType TypeOfPath;

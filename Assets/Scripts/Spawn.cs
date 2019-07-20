@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Spawns kiwis. Attack this to tiles that kiwis spawn on or exit from
+/// </summary>
 public class Spawn : Tile
 {
     public int Color;
