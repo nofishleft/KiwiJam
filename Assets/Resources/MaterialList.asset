@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de968cbeaad0cd0488feca85e937c556, type: 3}
   m_Name: MaterialList
   m_EditorClassIdentifier: 
-  _SpawnMaterials: []
-  _KiwiMaterials: []
+  _SpawnMaterials:
+  - {fileID: 0}
+  _ConstructionKiwiMaterials:
+  - {fileID: 2100000, guid: fbe4454e674c4f841a72e11d6ab218c0, type: 2}
+  _ConstructionKiwiPrefab: {fileID: 9034895335592441588, guid: 29c474de3f69bd5489e376882b4845c0,
+    type: 3}

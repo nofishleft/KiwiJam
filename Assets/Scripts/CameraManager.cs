@@ -57,11 +57,14 @@ public class CameraManager : MonoBehaviour
 
             if (sceneIndex == -1)
             {
+                Debug.LogError("Couldn't find any music for " + currentSceneName);
                 yield return new WaitForSeconds(waitInterval);
+                continue;
             }
 
             //Play
-            AudioClip clip = bgAudioClips[sceneIndex].list[Random.Range(0, bgAudioClips[sceneIndex].list.Length)];
+            int randInt = Random.Range(0, bgAudioClips[sceneIndex].list.Length);
+            AudioClip clip = bgAudioClips[sceneIndex].list[randInt];
             audioSource.clip = clip;
             audioSource.Play();
             yield return new WaitForSeconds(clip.length + waitInterval);

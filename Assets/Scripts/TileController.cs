@@ -3,9 +3,18 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
+/// <summary>
+/// Allows you to rotate and swap tiles
+/// </summary>
+
 [RequireComponent(typeof(AudioSource))]
 public class TileController : MonoBehaviour
 {
+    public float delay;
+    public static float timeStatic;
+    public static float timeStaticMax;
+    public float SwappingCooldown;
+
     private InputState _state = InputState.Nothing;
 
     private MoveableTile _tile;
@@ -15,27 +24,77 @@ public class TileController : MonoBehaviour
     private AudioSource audioSource;
 
     // Start is called before the first frame update
-    void Start()
+
+    void OnLevelWasLoaded()
     {
-        audioSource = GetComponent<AudioSource>();
+        StopAllCoroutines();
+        Debug.Log("Level was loaded");
+        StartCoroutine(nameof(WaitForKiwisToSpawn));
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+        audioSource = GetComponent<AudioSource>();
+        timeStaticMax = SwappingCooldown;
+    }
+    private void OnLevelWasLoaded(int level)
+    {
+        _state = InputState.Nothing;
+        _tile = null;
+    }
+
+    IEnumerator WaitForKiwisToSpawn()
+    {
+        Debug.Log("Started Waiting");
+        float t = 0;
+
+        while (t < delay) {
+            Debug.Log($"Time: {t}");
+            yield return null;
+
+            CheckSwapInput();
+
+            CheckRotationInput();
+
+            t += Time.deltaTime;
+        }
+
+        StartCoroutine(nameof(StartSwapCooldown));
+    }
+
+    IEnumerator StartSwapCooldown()
+    {
+        while (true)
+        {
+            //Check input each frame until swap has been performed
+            while (!CheckSwapInput()) yield return null;
+
+            timeStatic = 0; 
+
+            //Wait until swap is off cooldown
+            while (timeStatic < timeStaticMax)
+            {
+                yield return null;
+                timeStatic += Time.deltaTime;
+            }
+        }
+    }
+
+    public bool CheckSwapInput()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Mouse Left");
-            Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
+            //Debug.Log("Mouse Left");
+            //Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 20, Kiwi.TileFinderMask);
-            Debug.Log(v);
-            Debug.Log(hit.collider);
+            //Debug.Log(v);
+            //Debug.Log(hit.collider);
             if (hit.collider != null)
             {
                 MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
-                if (tile == null) return;
+                if (tile == null) return false;
                 switch (_state)
                 {
                     case InputState.Nothing:
@@ -44,7 +103,7 @@ public class TileController : MonoBehaviour
                         break;
                     case InputState.Click_Swap:
                         Swap(_tile, tile);
-                        break;
+                        return true;
                     default:
                         _state = InputState.Nothing;
                         break;
@@ -60,7 +119,7 @@ public class TileController : MonoBehaviour
             if (hit.collider != null)
             {
                 MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
-                if (tile == null) return;
+                if (tile == null) return false;
                 switch (_state)
                 {
                     case InputState.Undefined_Swap:
@@ -72,6 +131,7 @@ public class TileController : MonoBehaviour
                         {
                             _state = InputState.Nothing;
                             Swap(_tile, tile);
+                            return true;
                         }
                         break;
                     default:
@@ -80,7 +140,12 @@ public class TileController : MonoBehaviour
                 }
             }
         }
-        else if (Input.GetMouseButtonDown(1))
+        return false;
+    }
+
+    public void CheckRotationInput()
+    {
+        if (Input.GetMouseButtonDown(1))
         {
             Debug.Log("Mouse Right");
             Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -107,18 +172,25 @@ public class TileController : MonoBehaviour
     {
         playRotateClip();
         a.Rotate();
+
     }
 
     public void playRotateClip()
     {
-        AudioClip clip = rotateClips[Random.Range(0, rotateClips.Length)];
-        audioSource.PlayOneShot(clip);
+        if (rotateClips != null && rotateClips.Length > 0)
+        {
+            AudioClip clip = rotateClips[Random.Range(0, rotateClips.Length)];
+            audioSource.PlayOneShot(clip);
+        }
     }
 
     public void playSwapClip()
     {
-        AudioClip clip = swapClips[Random.Range(0, swapClips.Length)];
-        audioSource.PlayOneShot(clip);
+        if (swapClips != null && swapClips.Length > 0)
+        {
+            AudioClip clip = swapClips[Random.Range(0, swapClips.Length)];
+            audioSource.PlayOneShot(clip);
+        }
     }
 
     private enum InputState

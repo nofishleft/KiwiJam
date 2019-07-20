@@ -6,30 +6,36 @@ using UnityEngine;
 
 public class Kiwi : MonoBehaviour
 {
+    public Vector3 MovementDirection;
     public List<Vector3> Path;
     public float SpaceBetweenKiwis;
     public static LayerMask TileFinderMask = 1 << 11;
     public static LayerMask KiwiFinderMask = 1 << 10;
     public Tile parentTile;
-    private int next = 1;
+    public int next = 1;
     public EntryPoints Exit = EntryPoints.DOWN;
-    private bool HasPath = true;
+    public bool HasPath = true;
     public float Speed = 0.2f;
     public static Dictionary<int, Material> materials;
     public int Color;
     public float Rage;
-    public float RageIncreaseOverTime = 1/1000f;
-    public float RageIncreaseWhileStationary = 1/100f;
+    public float RageIncreaseOverTime = 1/10000f;
+    public float RageIncreaseWhileStationary = 1/1000f;
+    public bool awaiting = false;
+    public Transform ImageOrientation;
+    public float RageIncreasePotHole = 1 / 100f;
+    public float RageIncreaseWrongDestination = 1 / 100f;
+    public Spawn SpawnLocation;
 
     // Start is called before the first frame update
     void Start()
     {
         //transform.parent = parentTile.transform;
     }
-
     public void SetPath(List<Vector3> src)
     {
-        if (Path == null) Path = new List<Vector3>(src.Count);
+        Debug.Log(src.Count);
+        Path = new List<Vector3>(src.Count);
 
         if (FlipPath)
         {
@@ -43,21 +49,24 @@ public class Kiwi : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < Path.Count; ++i)
+            foreach (var obj in src)
             {
-                Path[i] = src[i];
+                Path.Add(obj);
             }
         }
+
+        //Debug.Log(Path.Count);
     }
 
     private bool FlipPath = false;
 
-    bool UpdatePath(Vector3 dir)
+    public bool UpdatePath(Vector3 dir)
     {
         //Find next tile
-        Vector3 origin = transform.position - Vector3.back;
+        Vector3 origin = transform.position;
 #if TwoD
         RaycastHit2D[] hits = Physics2D.RaycastAll(origin, dir, 0.5f, TileFinderMask);
+        //foreach (var thing in hits) Debug.Log(thing);
 #else
         RaycastHit[] hits = Physics.RaycastAll(origin, Vector3.back, 0.5f, TileFinderMask);
 #endif
@@ -65,7 +74,7 @@ public class Kiwi : MonoBehaviour
             if (hit.collider != null && hit.collider.gameObject != this.gameObject && hit.collider.gameObject != parentTile.gameObject)
             {
 #if DEBUG
-                Debug.Log("Found");
+                //Debug.Log("Found");
 #endif
                 Tile oldTile = parentTile;
 
@@ -78,6 +87,13 @@ public class Kiwi : MonoBehaviour
 
                 if (contains)
                 {
+                    RaycastHit2D checkHits = Physics2D.BoxCast(transform.position, new Vector2(0.25f, 0.25f), 0, Vector2.zero, 0, KiwiFinderMask);
+                    if (checkHits.collider != null && checkHits.collider.gameObject != this.gameObject)
+                    {
+                        Debug.Log("Returning false");
+                        return false;
+                    }
+
                     if (parentTile.Entries[0] == entry)
                     {
                         this.Exit = parentTile.Entries[1];
@@ -86,7 +102,7 @@ public class Kiwi : MonoBehaviour
                         this.Exit = parentTile.Entries[0];
                     }
 
-                    Debug.Log("Contains");
+                    //Debug.Log("Contains");
                     transform.parent = obj.transform;
 
                     List<Vector3> src = parentTile.Path;//parentTile.GetPath(transform.position);
@@ -110,11 +126,11 @@ public class Kiwi : MonoBehaviour
                     }
 
                     transform.localPosition = Path[0];
-                    Debug.Log(Path[0]);
+                    //Debug.Log(Path[0]);
 
                     next = 1;
 
-                    foreach (var o in Path) Debug.Log(o);
+                    //foreach (var o in Path) Debug.Log(o);
                     return true;
                 }
                 else
@@ -129,16 +145,18 @@ public class Kiwi : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if (!HasPath) Debug.Log(Tile.VectorFromEntryPoint(Exit).normalized);
         if (!HasPath) HasPath = UpdatePath(Tile.VectorFromEntryPoint(Exit).normalized);
-        if (!HasPath)
+        if (!HasPath || awaiting)
         {
             float r = (RageIncreaseOverTime + RageIncreaseWhileStationary) * Time.deltaTime;
             Rage += r;
             RageBar.rage += r;
-
+        }
+        if (!HasPath) {
             if (parentTile is Spawn)
             {
-                Spawn spawn = (Spawn) parentTile;
+                Spawn spawn = (Spawn)parentTile;
                 if (spawn.Color == this.Color)
                 {
                     //Despawn
@@ -149,7 +167,7 @@ public class Kiwi : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Turning around");
+                    /*Debug.Log("Turning around");
                     //Turn back
                     //Reverse Path
                     for (int i = 0; i < Path.Count / 2; ++i)
@@ -167,8 +185,21 @@ public class Kiwi : MonoBehaviour
                         this.Exit = parentTile.Entries[1];
                     else
                         this.Exit = parentTile.Entries[0];
-                    HasPath = true;
+                    HasPath = true;*/
+
+                    RageBar.rage += RageIncreaseWrongDestination;
+
+                    SpawnLocation.AddToRespawnQueue(this);
+                    //Destroy(gameObject);
                 }
+            } else if (parentTile is PotHole)
+            {
+                PotHole hole = (PotHole) parentTile;
+
+                RageBar.rage += RageIncreasePotHole;
+
+                SpawnLocation.AddToRespawnQueue(this);
+                //Destroy(gameObject);
             } else
                 return;
         }
@@ -180,7 +211,9 @@ public class Kiwi : MonoBehaviour
             RageBar.rage += r;
         }
 
-        Debug.Log($"Next: {next}, Path Count: {Path.Count}");
+        if (Path == null || Path.Count == 0) return;
+
+        //Debug.Log($"Next: {next}, Path Count: {Path.Count}");
 
         Vector3 to = Path[next] - transform.localPosition;
         Vector3 dir = to.normalized;
@@ -194,10 +227,12 @@ public class Kiwi : MonoBehaviour
 
             if (otherKiwi != null)
             {
-                transform.localPosition = transform.InverseTransformDirection(otherKiwi.position) - dir * SpaceBetweenKiwis;
-                distTravelled = 0;
-                break;
-            }
+                awaiting = true;
+                return;
+                //transform.localPosition = transform.InverseTransformDirection(otherKiwi.position) - dir * SpaceBetweenKiwis;
+                //distTravelled = 0;
+                //break;
+            } else awaiting = false;
 
             //distTravelled -= mag;
             distTravelled = 0;
@@ -221,16 +256,27 @@ public class Kiwi : MonoBehaviour
             }
         }
 
+        MovementDirection = transform.TransformDirection(dir);
+        MovementDirection.z = 0;
+
+        //Update Rotation to point in Movement Direction
+        ImageOrientation.rotation = Quaternion.FromToRotation(Vector2.right, MovementDirection);
+
         if (distTravelled > 0)
         {
-            Transform otherKiwi = Cast(distTravelled - mag);
+            Transform otherKiwi = Cast(distTravelled);
 
             if (otherKiwi != null)
             {
-                transform.localPosition = transform.InverseTransformPoint(otherKiwi.position) - dir * SpaceBetweenKiwis;
+                awaiting = true;
+                return;
+                //transform.localPosition = transform.InverseTransformPoint(otherKiwi.position) - dir * SpaceBetweenKiwis;
+                //awaiting = otherKiwi;
+                //lastPositionOfAwaiting = otherKiwi.position;
             }
             else
             {
+                awaiting = false;
                 transform.localPosition += dir * distTravelled;
             }
         }
@@ -239,20 +285,19 @@ public class Kiwi : MonoBehaviour
     //Raycast ahead to check if can move
     public Transform Cast(float distance)
     {
+        distance += SpaceBetweenKiwis;
         Vector3 origin = transform.position;
-        Vector3 dir;
-        if (next < Path.Count)
-            dir = (Path[next] - Path[next - 1]).normalized;
-        else
-            dir = (Path[next - 1] - Path[next - 2]).normalized;
-#if ThreeD
-        RaycastHit2D[] hits = Physics2D.RaycastAll(origin, dir, distance, 1 << gameObject.layer);
+
+        //Debug.Log(MovementDirection);
+#if TwoD
+        RaycastHit2D[] hits = Physics2D.RaycastAll(origin, MovementDirection, distance, KiwiFinderMask);
 #else
-        RaycastHit[] hits = Physics.RaycastAll(origin, Vector3.back, 2, ~(1 << gameObject.layer));
+        RaycastHit[] hits = Physics.RaycastAll(origin, MovementDirection, distance, KiwiFinderMask);
 #endif
         foreach (var hit in hits)
             if (hit.collider != null && hit.collider.gameObject != this.gameObject)
             {
+                //Debug.Log("Detected Kiwi");
                 return hit.collider.transform;
             }
 
