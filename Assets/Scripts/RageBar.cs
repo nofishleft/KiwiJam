@@ -17,21 +17,25 @@ public class RageBar : MonoBehaviour
         rage = 0;
         slider = GetComponent<Slider>();
         gm = GameObject.FindObjectOfType<GameManager>();
+        StartCoroutine(UpdateFunction());
     }
 
     // Update is called once per frame
-    void Update()
+    IEnumerator UpdateFunction()
     {
-        slider.value = Mathf.Lerp(slider.value, rage, 4 * Time.deltaTime);
-
-        if (slider.value >= 0.99)
+        yield return null;
+        while (slider.value < 0.99)
         {
-            SFXPlayer.PlayRageFullSound();
+            slider.value = Mathf.Lerp(slider.value, rage, 4 * Time.deltaTime);
+            yield return null;
         }
+
+        StartCoroutine(restart());
     }
 
     IEnumerator restart()
     {
+        SFXPlayer.PlayRageFullSound();
         Time.timeScale = 0.0f;
         yield return new WaitForSecondsRealtime(2f);
         Time.timeScale = 1.0f;

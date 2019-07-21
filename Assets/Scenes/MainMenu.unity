@@ -1165,7 +1165,6 @@ MonoBehaviour:
   levelSceneNames:
   - SceneLevel1
   - SceneLevel3
-  - VictoryScene
   - MainMenu
   tutorialSceneNames:
   - TutorialScene1
