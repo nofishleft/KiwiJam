@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 4632680249602128665}
   - component: {fileID: 4632680249602128666}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Ragebar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

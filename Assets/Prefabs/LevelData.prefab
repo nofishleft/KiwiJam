@@ -586,7 +586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Colors: 00000000
   CameraPosition: {x: 2, y: 0, z: -10}
-  CameraRotation: {x: 0, y: 0, z: 0, w: 0}
+  CameraRotation: {x: 0, y: 0, z: 0}
   Orthographic: 1
   bounds:
     serializedVersion: 2
@@ -594,7 +594,9 @@ MonoBehaviour:
     y: 0
     width: 5
     height: 1
-  HideOnClick: {fileID: 7688621084860484332}
+  HideOnClick: {fileID: 7688621084528865514}
+  FadeOnClick: {fileID: 7688621083909434057}
+  Button: {fileID: 7688621083909434054}
 --- !u!1 &7688621083909434052
 GameObject:
   m_ObjectHideFlags: 0
@@ -1194,7 +1196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b0a9db18fb01948bef81b840007d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  durationSeconds: 90
+  durationSeconds: 15
   isStarted: 0
 --- !u!1 &8978239896175113204
 GameObject:
