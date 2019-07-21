@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4144931453153511993}
   - component: {fileID: 6273447157259020099}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Straight piece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 5372186746338629053}
   - component: {fileID: 8490130611665010307}
   - component: {fileID: 8348331689892404364}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Straight_piece
   m_TagString: Untagged
   m_Icon: {fileID: 0}

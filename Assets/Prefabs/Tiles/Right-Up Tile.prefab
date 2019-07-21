@@ -168,6 +168,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turn Piece
       objectReference: {fileID: 0}
+    - target: {fileID: 2309633717127248321, guid: df8aff0009e784b4b84a30aabc7683ca,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1609525010185358290, guid: df8aff0009e784b4b84a30aabc7683ca,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -222,6 +227,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906865225116979271, guid: df8aff0009e784b4b84a30aabc7683ca,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df8aff0009e784b4b84a30aabc7683ca, type: 3}

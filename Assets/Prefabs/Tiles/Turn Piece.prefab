@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1609525010185358290}
   - component: {fileID: 8708886055092233896}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Turn Piece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,8 @@ GameObject:
   - component: {fileID: 845760536629980851}
   - component: {fileID: 5096581170197869516}
   - component: {fileID: 6637497860823686937}
-  m_Layer: 0
+  - component: {fileID: 4860585284621898998}
+  m_Layer: 11
   m_Name: Turn_piece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,3 +129,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &4860585284621898998
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7906865225116979271}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4669220178202663369, guid: 405f224d0b423f84a9efdd28dd995c19, type: 3}
