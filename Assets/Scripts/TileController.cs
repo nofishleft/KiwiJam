@@ -30,6 +30,7 @@ public class TileController : MonoBehaviour
         StopAllCoroutines();
         Debug.Log("Level was loaded");
         StartCoroutine(nameof(WaitForKiwisToSpawn));
+        timeStatic = timeStaticMax;
     }
 
     void Start()
@@ -38,6 +39,7 @@ public class TileController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         timeStaticMax = SwappingCooldown;
     }
+
     private void OnLevelWasLoaded(int level)
     {
         _state = InputState.Nothing;
