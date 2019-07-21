@@ -14,14 +14,16 @@ public class Spawn : Tile
     public static float initDelayStatic;
     private float _time = 0;
 
-    private void Awake()
+    /*private void Awake()
     {
         initDelayStatic = initDelay;
         _time -= initDelay;
-    }
+    }*/
 
     private void Update()
     {
+        if (!LevelData.Started) return;
+
         _time += Time.deltaTime;
 
         if (_time > SpawnDelay)
