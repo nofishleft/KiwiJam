@@ -849,6 +849,7 @@ GameObject:
   - component: {fileID: 340858902}
   - component: {fileID: 340858901}
   - component: {fileID: 340858903}
+  - component: {fileID: 340858904}
   m_Layer: 0
   m_Name: TileController
   m_TagString: Untagged
@@ -882,7 +883,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd5f028350eb214fa9fc0475a40136a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 3
   SwappingCooldown: 2
 --- !u!82 &340858902
 AudioSource:
@@ -1002,6 +1002,27 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cc8d5c7620d726245a33ae142874be18, type: 3}
   SelectSounds:
   - {fileID: 8300000, guid: d1180e55f6a9fc44db30accaf8d5a48d, type: 3}
+--- !u!114 &340858904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340858899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5362f2ab84eb442a13a6c18fe24371, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainMenu:
+  - {fileID: 8300000, guid: 8fb931a7c33afcc4c9b768118427d0e5, type: 3}
+  PlayTracks:
+  - {fileID: 8300000, guid: 2febb673c1ad08c4dbe5ef852d1bca04, type: 3}
+  - {fileID: 8300000, guid: bae84e1c4c0b8e14cb1a2c8c3dba080b, type: 3}
+  RotationPhase:
+  - {fileID: 8300000, guid: dfee2588f63ab8946b7b873265971dc7, type: 3}
+  source: {fileID: 340858902}
+  TrackVolume: 1
 --- !u!1 &549315852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,6 +1175,8 @@ MonoBehaviour:
   - TutorialScene2
   - MainMenu
   currentSceneNames: []
+  GUIPrefab: {fileID: 7688621082850594849, guid: 02f141bdce13d5446a1a055aec801457,
+    type: 3}
   triggerMainMenuScene: 0
   triggerRestartScene: 0
   triggerNextScene: 0
