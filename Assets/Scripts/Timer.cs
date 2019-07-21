@@ -10,6 +10,7 @@ public class Timer : MonoBehaviour
     //public int initialDelay = 15;
     public static int initialDelayStatic;
     public int durationSeconds = 90;
+    public bool isStarted = false;
     TextMeshProUGUI text;
     GameManager gm;
 
@@ -22,7 +23,7 @@ public class Timer : MonoBehaviour
 
     public void Update()
     {
-        if (LevelData.Started)
+        if (LevelData.Started && !isStarted)
         {
             StartCoroutine(Countdown());
         }

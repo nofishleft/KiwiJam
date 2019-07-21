@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Store all the levels specific data
@@ -16,9 +17,31 @@ public class LevelData : MonoBehaviour
     public bool Orthographic;
     public Rect bounds;
 
+    public static bool Started = false;
+    public GameObject HideOnClick;
+
+    public void OnClick()
+    {
+        Started = true;
+        StartCoroutine(nameof(Hide));
+    }
+
+    IEnumerator Hide()
+    {
+        GetComponentInChildren<Button>().enabled = false;
+        yield return new WaitForSeconds(0.5f);
+        HideOnClick.SetActive(false);
+    }
+
+    private void Awake()
+    {
+        Started = false;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        Started = false;
         AvailableColors = Colors;
         Camera cam = Camera.main;
         Transform t = cam.transform;
