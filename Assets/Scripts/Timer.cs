@@ -26,6 +26,7 @@ public class Timer : MonoBehaviour
         if (LevelData.Started && !isStarted)
         {
             StartCoroutine(Countdown());
+            isStarted = true;
         }
     }
 
