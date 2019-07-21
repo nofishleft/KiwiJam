@@ -321,10 +321,8 @@ MonoBehaviour:
   - MainMenu
   - TutorialScene1
   bgAudioClips:
-  - list:
-    - {fileID: 8300000, guid: d31299945a757e144b389ceae1f8506f, type: 3}
-  - list:
-    - {fileID: 8300000, guid: 9ae8b431210a9c34d963b53b0e216323, type: 3}
+  - list: []
+  - list: []
 --- !u!114 &11456760
 MonoBehaviour:
   m_ObjectHideFlags: 0

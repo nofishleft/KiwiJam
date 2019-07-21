@@ -81,8 +81,8 @@ public class TileController : MonoBehaviour
             
             if (Physics.Raycast(ray, out RaycastHit hit,20, Kiwi.TileFinderMask))
             {
-
-                MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
+                MoveableTile tile = hit.collider.gameObject.GetComponentInParent<MoveableTile>();
+                //MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
                 if (tile == null) return false;
                 switch (_state)
                 {
@@ -110,7 +110,8 @@ public class TileController : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit, 20, Kiwi.TileFinderMask))
             {
-                MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
+                MoveableTile tile = hit.collider.gameObject.GetComponentInParent<MoveableTile>();
+                //MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
                 if (tile == null) return false;
                 switch (_state)
                 {
@@ -148,7 +149,8 @@ public class TileController : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit, 20, Kiwi.TileFinderMask))
             {
-                MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
+                MoveableTile tile = hit.collider.gameObject.GetComponentInParent<MoveableTile>();
+                //MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
                 Rotate(tile);
             }
         }

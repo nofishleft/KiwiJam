@@ -156,6 +156,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!64 &129921786945371246
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272773229297639659}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -4340650744644143223, guid: ebf42f025e5109d409f6c48ef914b3c5, type: 3}
 --- !u!1001 &7432637250901915271
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -238,6 +252,12 @@ PrefabInstance:
 --- !u!4 &6819515267166977214 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4144931453153511993, guid: 4f809c21597a1f541890251b54361954,
+    type: 3}
+  m_PrefabInstance: {fileID: 7432637250901915271}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1272773229297639659 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8543263283165107820, guid: 4f809c21597a1f541890251b54361954,
     type: 3}
   m_PrefabInstance: {fileID: 7432637250901915271}
   m_PrefabAsset: {fileID: 0}
