@@ -49,13 +49,19 @@ MonoBehaviour:
   Path: []
   SpaceBetweenKiwis: 0.4
   parentTile: {fileID: 0}
+  next: 1
   Exit: 1
+  HasPath: 1
   Speed: 1
   Color: 0
   Rage: 0
-  RageIncreaseOverTime: 0.001
-  RageIncreaseWhileStationary: 0.01
+  RageIncreaseOverTime: 0.01
+  RageIncreaseWhileStationary: 0.03
+  awaiting: 0
   ImageOrientation: {fileID: 4042211281818158882}
+  RageIncreasePotHole: 0.01
+  RageIncreaseWrongDestination: 0.01
+  SpawnLocation: {fileID: 0}
 --- !u!61 &9034895335592441585
 BoxCollider2D:
   m_ObjectHideFlags: 0

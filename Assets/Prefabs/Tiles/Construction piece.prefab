@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8661906991254549541}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Construction_Kiwi2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2615127700382001088}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Construction_Kiwi1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,8 @@ GameObject:
   - component: {fileID: 578833732487310230}
   - component: {fileID: 8205944451083841379}
   - component: {fileID: 7848115350745640525}
-  m_Layer: 0
+  - component: {fileID: 3662510394137522678}
+  m_Layer: 11
   m_Name: Construction_piece 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,6 +146,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &3662510394137522678
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546888790434723167}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 2226489371890141713, guid: 1350a674046fe0748ae6797ff684ec62, type: 3}
 --- !u!1 &659907884515202999
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +171,7 @@ GameObject:
   - component: {fileID: 3835667603581835367}
   - component: {fileID: 158402360182402526}
   - component: {fileID: 4358809761062802671}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Stop_sign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +247,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4330584993954311503}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Construction piece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +288,7 @@ GameObject:
   - component: {fileID: 5626456558845075854}
   - component: {fileID: 191319559372914983}
   - component: {fileID: 2471447290442816493}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cone1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,7 +365,7 @@ GameObject:
   - component: {fileID: 8447140750287109070}
   - component: {fileID: 7730135665290027561}
   - component: {fileID: 4468175013767805143}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Leg_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -428,7 +443,7 @@ GameObject:
   - component: {fileID: 8981244942927856529}
   - component: {fileID: 601482557487885555}
   - component: {fileID: 2921956061211706342}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wood_Piece1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -505,7 +520,7 @@ GameObject:
   - component: {fileID: 4042777987740853288}
   - component: {fileID: 1479276752571504977}
   - component: {fileID: 263118321606468089}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Foot_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -582,7 +597,7 @@ GameObject:
   - component: {fileID: 5889402125346928070}
   - component: {fileID: 7838761883568289615}
   - component: {fileID: 7060395721361632853}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Leg_L 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -660,7 +675,7 @@ GameObject:
   - component: {fileID: 1151889775434957624}
   - component: {fileID: 6044466313080302972}
   - component: {fileID: 34361916756347487}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Foot_R 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -737,7 +752,7 @@ GameObject:
   - component: {fileID: 26538763742726958}
   - component: {fileID: 8646467624037177930}
   - component: {fileID: 1667305913799766500}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Pole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -814,7 +829,7 @@ GameObject:
   - component: {fileID: 8592894586075505184}
   - component: {fileID: 466098045408768375}
   - component: {fileID: 6817813518653260190}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Foot_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -891,7 +906,7 @@ GameObject:
   - component: {fileID: 1275143947768672807}
   - component: {fileID: 5262115105735486425}
   - component: {fileID: 7970163002115055899}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hard_Hat 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -968,7 +983,7 @@ GameObject:
   - component: {fileID: 7655982071606574944}
   - component: {fileID: 1257805515525419620}
   - component: {fileID: 2174123726910340048}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Leg_R 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1046,7 +1061,7 @@ GameObject:
   - component: {fileID: 4069318019156751663}
   - component: {fileID: 7650462682693286017}
   - component: {fileID: 1513366793959245140}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Kiwi_body 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1124,7 +1139,7 @@ GameObject:
   - component: {fileID: 4336419294488454332}
   - component: {fileID: 1924384401531538009}
   - component: {fileID: 2762777017485738452}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Leg_L 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1202,7 +1217,7 @@ GameObject:
   - component: {fileID: 7414472249444355870}
   - component: {fileID: 4673538881684324090}
   - component: {fileID: 8555886312300367630}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Kiwi_Beak 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1279,7 +1294,7 @@ GameObject:
   - component: {fileID: 5924502137758300893}
   - component: {fileID: 4705299483404940357}
   - component: {fileID: 5604756610405855971}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Kiwi_Beak
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1356,7 +1371,7 @@ GameObject:
   - component: {fileID: 1572907490906106675}
   - component: {fileID: 2925411107815441770}
   - component: {fileID: 3405806409464479684}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Kiwi_Beak 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1433,7 +1448,7 @@ GameObject:
   - component: {fileID: 6485249108402327125}
   - component: {fileID: 8766551208863245553}
   - component: {fileID: 2502694454553784928}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Kiwi_Head 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1511,7 +1526,7 @@ GameObject:
   - component: {fileID: 3705294676237226475}
   - component: {fileID: 1704423869481358547}
   - component: {fileID: 2584752768304513723}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1588,7 +1603,7 @@ GameObject:
   - component: {fileID: 1395852929818809575}
   - component: {fileID: 4865498889359892828}
   - component: {fileID: 7366800141320466766}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Leg_R 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1666,7 +1681,7 @@ GameObject:
   - component: {fileID: 7740661606481877789}
   - component: {fileID: 7415039451766257426}
   - component: {fileID: 2979565576538232190}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Foot_L 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1743,7 +1758,7 @@ GameObject:
   - component: {fileID: 2666357506092581312}
   - component: {fileID: 9172610257251278599}
   - component: {fileID: 6264667022243699551}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Kiwi_body 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1819,7 +1834,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4231814931625904239}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Construction_Kiwi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1855,7 +1870,7 @@ GameObject:
   - component: {fileID: 8416081020399352844}
   - component: {fileID: 7373601724496865939}
   - component: {fileID: 1993952592634444103}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hard_Hat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1932,7 +1947,7 @@ GameObject:
   - component: {fileID: 7395795407077972603}
   - component: {fileID: 6782929732147405741}
   - component: {fileID: 4681836653499564187}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cone3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2009,7 +2024,7 @@ GameObject:
   - component: {fileID: 4599242273010587641}
   - component: {fileID: 6778721741753277637}
   - component: {fileID: 3733701939663939431}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Leg_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2087,7 +2102,7 @@ GameObject:
   - component: {fileID: 2017376557590541690}
   - component: {fileID: 5897592559923954247}
   - component: {fileID: 4062899891552098577}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wood_Piece2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2164,7 +2179,7 @@ GameObject:
   - component: {fileID: 4382627481207702695}
   - component: {fileID: 7894976353839517494}
   - component: {fileID: 8364432366920984864}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Kiwi_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2242,7 +2257,7 @@ GameObject:
   - component: {fileID: 4769895517028228826}
   - component: {fileID: 399638878597888705}
   - component: {fileID: 3916533824130462863}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Foot_R 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2319,7 +2334,7 @@ GameObject:
   - component: {fileID: 1767659781910530172}
   - component: {fileID: 642377892594337709}
   - component: {fileID: 1935281177546803695}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Kiwi_Head 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2397,7 +2412,7 @@ GameObject:
   - component: {fileID: 6762807340659632865}
   - component: {fileID: 1585407337699455112}
   - component: {fileID: 8522557693169828920}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cone2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2474,7 +2489,7 @@ GameObject:
   - component: {fileID: 5865051456505635109}
   - component: {fileID: 5021279732030861797}
   - component: {fileID: 4381635518047826930}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Foot_L 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2551,7 +2566,7 @@ GameObject:
   - component: {fileID: 5574679048785280512}
   - component: {fileID: 4148363443787879601}
   - component: {fileID: 944194153629313543}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hard_Hat 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2628,7 +2643,7 @@ GameObject:
   - component: {fileID: 3478980904272136185}
   - component: {fileID: 4597038696966837131}
   - component: {fileID: 3838004147793825520}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wood_Piece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2705,7 +2720,7 @@ GameObject:
   - component: {fileID: 4511170039510883866}
   - component: {fileID: 4434692358798116046}
   - component: {fileID: 4182756467131209408}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Kiwi_body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2781,7 +2796,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8463450463737981036}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cones
   m_TagString: Untagged
   m_Icon: {fileID: 0}

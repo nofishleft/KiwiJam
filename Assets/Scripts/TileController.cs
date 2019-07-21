@@ -77,15 +77,12 @@ public class TileController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            //Debug.Log("Mouse Left");
-            //Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 20, Kiwi.TileFinderMask);
-            //Debug.Log(v);
-            //Debug.Log(hit.collider);
-            if (hit.collider != null)
+            
+            if (Physics.Raycast(ray, out RaycastHit hit,20, Kiwi.TileFinderMask))
             {
-                MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
+                MoveableTile tile = hit.collider.gameObject.GetComponentInParent<MoveableTile>();
+                //MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
                 if (tile == null) return false;
                 switch (_state)
                 {
@@ -110,10 +107,11 @@ public class TileController : MonoBehaviour
             Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 20, Kiwi.TileFinderMask);
-            if (hit.collider != null)
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 20, Kiwi.TileFinderMask))
             {
-                MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
+                MoveableTile tile = hit.collider.gameObject.GetComponentInParent<MoveableTile>();
+                //MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
                 if (tile == null) return false;
                 switch (_state)
                 {
@@ -148,10 +146,11 @@ public class TileController : MonoBehaviour
             Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 20, Kiwi.TileFinderMask);
-            if (hit.collider != null)
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 20, Kiwi.TileFinderMask))
             {
-                MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
+                MoveableTile tile = hit.collider.gameObject.GetComponentInParent<MoveableTile>();
+                //MoveableTile tile = hit.collider.gameObject.GetComponent<MoveableTile>();
                 Rotate(tile);
             }
         }
