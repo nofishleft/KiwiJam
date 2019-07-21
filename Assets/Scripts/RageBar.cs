@@ -20,5 +20,10 @@ public class RageBar : MonoBehaviour
     void Update()
     {
         slider.value = Mathf.Lerp(slider.value, rage, 4 * Time.deltaTime);
+
+        if (slider.value >= 0.99)
+        {
+            SFXPlayer.PlayRageFullSound();
+        }
     }
 }

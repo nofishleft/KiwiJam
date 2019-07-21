@@ -20,13 +20,13 @@ public class SFXPlayer : MonoBehaviour
     public static void PlaySelectSound(Vector3 pos)
     {
         AudioClip clip = player.SelectSounds[Random.Range(0, player.SelectSounds.Length)];
-        AudioSource.PlayClipAtPoint(clip, pos);
+        AudioSource.PlayClipAtPoint(clip, pos, 0.4f);
     }
 
     public static void PlayRageFullSound()
     {
         AudioClip clip = player.RageFullSounds[Random.Range(0, player.RageFullSounds.Length)];
-        AudioSource.PlayClipAtPoint(clip, player.transform.position);
+        AudioSource.PlayClipAtPoint(clip, player.transform.position, 0.2f);
     }
 
     public static void PlaySwapSound(Vector3 pos)

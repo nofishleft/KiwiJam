@@ -10,7 +10,6 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class TileController : MonoBehaviour
 {
-    public float delay;
     public static float timeStatic;
     public static float timeStaticMax;
     public float SwappingCooldown;
@@ -44,17 +43,13 @@ public class TileController : MonoBehaviour
     IEnumerator WaitForKiwisToSpawn()
     {
         Debug.Log("Started Waiting");
-        float t = 0;
 
-        while (t < delay) {
-            Debug.Log($"Time: {t}");
+        while (LevelData.Started == false) {
             yield return null;
 
             CheckSwapInput();
 
             CheckRotationInput();
-
-            t += Time.deltaTime;
         }
 
         StartCoroutine(nameof(StartSwapCooldown));
@@ -101,6 +96,8 @@ public class TileController : MonoBehaviour
                         break;
                     case InputState.Click_Swap:
                         Swap(_tile, tile);
+                        _state = InputState.Nothing;
+                        _tile = null;
                         return true;
                     default:
                         _state = InputState.Nothing;
@@ -123,12 +120,14 @@ public class TileController : MonoBehaviour
                     case InputState.Undefined_Swap:
                         if (tile == _tile)
                         {
+                            //SFXPlayer.PlaySelectSound(transform.position);
                             _state = InputState.Click_Swap;
                         }
                         else
                         {
                             _state = InputState.Nothing;
                             Swap(_tile, tile);
+                            _tile = null;
                             return true;
                         }
                         break;
@@ -168,7 +167,7 @@ public class TileController : MonoBehaviour
 
     public void Rotate(Tile a)
     {
-        SFXPlayer.PlaySwapSound(a.transform.position);
+        SFXPlayer.PlayRotateSound(a.transform.position);
         a.Rotate();
 
     }
