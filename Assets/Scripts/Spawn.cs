@@ -73,10 +73,10 @@ public class Spawn : Tile
 
     private void Create()
     {
-        GameObject prefab = MaterialList.ConstructionKiwiPrefab;
+        GameObject prefab = GameManager.ConstructionKiwiPrefab;
 
         int i = LevelData.AvailableColors[Random.Range(0,LevelData.AvailableColors.Length)];
-        Material mat = MaterialList.ConstructionKiwiMaterials[i];
+        //Material mat = GameManager.ConstructionKiwiMaterial;
 
         GameObject obj = Instantiate(prefab, this.transform);
         Kiwi kiwi = obj.GetComponent<Kiwi>();

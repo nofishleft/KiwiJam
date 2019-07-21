@@ -26,8 +26,13 @@ public class GameManager : MonoBehaviour
     public bool triggerRestartScene = false;
     public bool triggerNextScene = false;
 
+    public static GameObject ConstructionKiwiPrefab;
+    public GameObject _ConstructionKiwiPrefab;
+
     private void Awake()
     {
+        ConstructionKiwiPrefab = _ConstructionKiwiPrefab;
+
         if (instance == null)
         {
             DontDestroyOnLoad(gameObject);
@@ -42,8 +47,6 @@ public class GameManager : MonoBehaviour
     {
         canvas = transform.GetChild(0).gameObject;
         currentSceneName = mainMenuSceneName;
-
-        MaterialList.Load();
     }
 
     // This is only implemented for testing, it can be removed later
