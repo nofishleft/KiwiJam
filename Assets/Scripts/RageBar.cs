@@ -14,6 +14,7 @@ public class RageBar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rage = 0;
         slider = GetComponent<Slider>();
         gm = GameObject.FindObjectOfType<GameManager>();
     }
