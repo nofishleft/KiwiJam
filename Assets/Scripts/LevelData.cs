@@ -58,6 +58,7 @@ public class LevelData : MonoBehaviour
         Started = false;
         AvailableColors = Colors;
         Camera cam = Camera.main;
+        Debug.Log(Camera.main);
         Transform t = cam.transform;
         t.position = CameraPosition;
         t.rotation = Quaternion.Euler(CameraRotation);

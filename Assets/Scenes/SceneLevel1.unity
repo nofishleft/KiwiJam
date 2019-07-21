@@ -386,6 +386,16 @@ PrefabInstance:
       propertyPath: bounds.height
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6348680345446241299, guid: 02f141bdce13d5446a1a055aec801457,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6348680345748197159, guid: 02f141bdce13d5446a1a055aec801457,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02f141bdce13d5446a1a055aec801457, type: 3}
 --- !u!1 &607179026

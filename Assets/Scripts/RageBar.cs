@@ -9,11 +9,13 @@ public class RageBar : MonoBehaviour
     Slider slider;
     [Range(0, 1)]
     public static float rage = 0;
+    GameManager gm;
 
     // Start is called before the first frame update
     void Start()
     {
         slider = GetComponent<Slider>();
+        gm = GameObject.FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
@@ -25,5 +27,14 @@ public class RageBar : MonoBehaviour
         {
             SFXPlayer.PlayRageFullSound();
         }
+    }
+
+    IEnumerator restart()
+    {
+        Time.timeScale = 0.0f;
+        yield return new WaitForSecondsRealtime(2f);
+        Time.timeScale = 1.0f;
+        gm.restartScene();
+
     }
 }

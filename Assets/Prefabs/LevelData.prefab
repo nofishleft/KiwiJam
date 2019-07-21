@@ -1196,7 +1196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b0a9db18fb01948bef81b840007d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  durationSeconds: 90
+  durationSeconds: 15
   isStarted: 0
 --- !u!1 &8978239896175113204
 GameObject:
