@@ -401,6 +401,11 @@ PrefabInstance:
       propertyPath: CameraRotation.z
       value: -67.409
       objectReference: {fileID: 0}
+    - target: {fileID: 7688621082850594848, guid: 02f141bdce13d5446a1a055aec801457,
+        type: 3}
+      propertyPath: Orthographic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6348680345446241299, guid: 02f141bdce13d5446a1a055aec801457,
         type: 3}
       propertyPath: m_AnchorMax.x
