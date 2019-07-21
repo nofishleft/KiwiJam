@@ -16,8 +16,6 @@ public class GameManager : MonoBehaviour
     public string[] tutorialSceneNames;
     public string[] currentSceneNames;
 
-    public GameObject GUIPrefab;
-
     string currentSceneName;
     int sceneIndex = 0;
     bool isPaused = false;
@@ -140,11 +138,6 @@ public class GameManager : MonoBehaviour
         while (!asyncLoad.isDone)
         {
             yield return null;
-        }
-
-        if (sceneName != mainMenuSceneName)
-        {
-            Instantiate(GUIPrefab);
         }
     }
 }
