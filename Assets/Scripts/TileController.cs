@@ -19,10 +19,6 @@ public class TileController : MonoBehaviour
 
     private MoveableTile _tile;
 
-    public AudioClip[] swapClips;
-    public AudioClip[] rotateClips;
-    private AudioSource audioSource;
-
     // Start is called before the first frame update
 
     void OnLevelWasLoaded()
@@ -36,7 +32,6 @@ public class TileController : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-        audioSource = GetComponent<AudioSource>();
         timeStaticMax = SwappingCooldown;
     }
 
@@ -102,6 +97,7 @@ public class TileController : MonoBehaviour
                     case InputState.Nothing:
                         this._tile = tile;
                         _state = InputState.Undefined_Swap;
+                        SFXPlayer.PlaySelectSound(transform.position);
                         break;
                     case InputState.Click_Swap:
                         Swap(_tile, tile);
@@ -164,7 +160,7 @@ public class TileController : MonoBehaviour
 
     public void Swap(Tile a, Tile b)
     {
-        playSwapClip();
+        SFXPlayer.PlaySwapSound(Vector3.Lerp(a.transform.position, b.transform.position, 0.5f));
         Vector3 pos = b.transform.position;
         b.transform.position = a.transform.position;
         a.transform.position = pos;
@@ -172,27 +168,9 @@ public class TileController : MonoBehaviour
 
     public void Rotate(Tile a)
     {
-        playRotateClip();
+        SFXPlayer.PlaySwapSound(a.transform.position);
         a.Rotate();
 
-    }
-
-    public void playRotateClip()
-    {
-        if (rotateClips != null && rotateClips.Length > 0)
-        {
-            AudioClip clip = rotateClips[Random.Range(0, rotateClips.Length)];
-            audioSource.PlayOneShot(clip);
-        }
-    }
-
-    public void playSwapClip()
-    {
-        if (swapClips != null && swapClips.Length > 0)
-        {
-            AudioClip clip = swapClips[Random.Range(0, swapClips.Length)];
-            audioSource.PlayOneShot(clip);
-        }
     }
 
     private enum InputState

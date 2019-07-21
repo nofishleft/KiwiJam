@@ -154,7 +154,25 @@ public class Kiwi : MonoBehaviour
             RageBar.rage += r;
         }
         if (!HasPath) {
-            if (parentTile is Spawn)
+            if (parentTile is Exit)
+            {
+                Exit ex = (Exit)parentTile;
+                if (ex.Color == this.Color)
+                {
+                    //Despawn
+                    Debug.Log("Despawning");
+                    RageBar.rage -= Rage;
+
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    RageBar.rage += RageIncreaseWrongDestination;
+
+                    SpawnLocation.AddToRespawnQueue(this);
+                }
+            }
+            else if (parentTile is Spawn)
             {
                 Spawn spawn = (Spawn)parentTile;
                 if (spawn.Color == this.Color)
@@ -192,15 +210,17 @@ public class Kiwi : MonoBehaviour
                     SpawnLocation.AddToRespawnQueue(this);
                     //Destroy(gameObject);
                 }
-            } else if (parentTile is PotHole)
+            }
+            else if (parentTile is PotHole)
             {
-                PotHole hole = (PotHole) parentTile;
+                PotHole hole = (PotHole)parentTile;
 
                 RageBar.rage += RageIncreasePotHole;
 
                 SpawnLocation.AddToRespawnQueue(this);
                 //Destroy(gameObject);
-            } else
+            }
+            else
                 return;
         }
 

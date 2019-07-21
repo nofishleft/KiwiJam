@@ -14,6 +14,7 @@ public class LevelData : MonoBehaviour
     public int[] Colors;
 
     public Vector3 CameraPosition;
+    public Quaternion CameraRotation;
     public bool Orthographic;
     public Rect bounds;
 
@@ -46,7 +47,7 @@ public class LevelData : MonoBehaviour
         Camera cam = Camera.main;
         Transform t = cam.transform;
         t.position = CameraPosition;
-        t.rotation = Quaternion.identity;
+        t.rotation = CameraRotation;
 
         cam.orthographic = Orthographic;
         cam.orthographicSize = (bounds.width > bounds.height) ? bounds.width/2 : bounds.height/2;

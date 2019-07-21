@@ -848,6 +848,7 @@ GameObject:
   - component: {fileID: 340858900}
   - component: {fileID: 340858902}
   - component: {fileID: 340858901}
+  - component: {fileID: 340858903}
   m_Layer: 0
   m_Name: TileController
   m_TagString: Untagged
@@ -883,8 +884,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 3
   SwappingCooldown: 2
-  swapClips: []
-  rotateClips: []
 --- !u!82 &340858902
 AudioSource:
   m_ObjectHideFlags: 0
@@ -981,6 +980,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &340858903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340858899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 661c7ce50a11606429dbeacf9d7c3713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotateSounds:
+  - {fileID: 8300000, guid: 80dfb92034da2684cbd309e1e2010e02, type: 3}
+  - {fileID: 8300000, guid: 9d63009c41abdd24c814c914dcdd4d07, type: 3}
+  - {fileID: 8300000, guid: cb42c5376a0d40a4999feee6bd6eef6d, type: 3}
+  SwapSounds:
+  - {fileID: 8300000, guid: 83e84130e64b2274d8883b953071c565, type: 3}
+  RageFullSounds:
+  - {fileID: 8300000, guid: cc8d5c7620d726245a33ae142874be18, type: 3}
 --- !u!1 &549315852
 GameObject:
   m_ObjectHideFlags: 0
