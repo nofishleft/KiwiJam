@@ -1164,13 +1164,11 @@ MonoBehaviour:
   mainMenuSceneName: MainMenu
   levelSceneNames:
   - SceneLevel1
-  - SceneLevel2
   - SceneLevel3
   - VictoryScene
   - MainMenu
   tutorialSceneNames:
   - TutorialScene1
-  - TutorialScene2
   - MainMenu
   currentSceneNames: []
   triggerMainMenuScene: 0
