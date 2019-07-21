@@ -7,7 +7,7 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
 
-    public int initialDelay = 15;
+    //public int initialDelay = 15;
     public static int initialDelayStatic;
     public int durationSeconds = 90;
     TextMeshProUGUI text;
@@ -18,12 +18,14 @@ public class Timer : MonoBehaviour
     {
         text = GetComponent<TextMeshProUGUI>();
         gm = GameObject.FindObjectOfType<GameManager>();
-        StartTimer();
     }
 
-    public void StartTimer()
+    public void Update()
     {
-        StartCoroutine(initialDelayCountdown());
+        if (LevelData.Started)
+        {
+            StartCoroutine(Countdown());
+        }
     }
 
     string getMinutesSeconds(int time)
@@ -38,18 +40,18 @@ public class Timer : MonoBehaviour
         return min.ToString() + ':' + secStr.ToString();
     }
 
-    IEnumerator initialDelayCountdown()
-    {
-        while (initialDelay > 0)
-        {
-            text.text = getMinutesSeconds(initialDelay);
-            yield return new WaitForSeconds(1.0f);
-            initialDelay--;
-        }
+    //IEnumerator initialDelayCountdown()
+    //{
+    //    while (initialDelay > 0)
+    //    {
+    //        text.text = getMinutesSeconds(initialDelay);
+    //        yield return new WaitForSeconds(1.0f);
+    //        initialDelay--;
+    //    }
 
-        StartCoroutine(Countdown());
+    //    StartCoroutine(Countdown());
 
-    }
+    //}
 
     IEnumerator Countdown()
     {
