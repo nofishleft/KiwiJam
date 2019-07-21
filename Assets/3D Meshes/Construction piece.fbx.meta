@@ -8,12 +8,20 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: General
+<<<<<<< Updated upstream
     second: {fileID: 2100000, guid: cdab35e91a4ef0c4a8ab56e2e09af3ea, type: 2}
+=======
+    second: {fileID: 2100000, guid: bee1fd2c7f96bdf4fb5589a2e120061e, type: 2}
+>>>>>>> Stashed changes
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: General_2
+<<<<<<< Updated upstream
     second: {fileID: 2100000, guid: 8936313dc6ac4fa41878c78389eb02af, type: 2}
+=======
+    second: {fileID: 2100000, guid: 7d0d0a0c6d35e794ca77c58ef42eafa8, type: 2}
+>>>>>>> Stashed changes
   materials:
     importMaterials: 1
     materialName: 0

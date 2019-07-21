@@ -73,8 +73,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TypeOfPath: 1
   Entries: 0400000003000000
+  childSpriteName: DummySprite
+  dummySprite: {fileID: 0}
   Color: 0
   SpawnDelay: 0
+  initDelay: 0
 --- !u!1 &7425939575297065
 GameObject:
   m_ObjectHideFlags: 0
